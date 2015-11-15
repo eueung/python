@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Introduction to IPython</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Open+Sans);
+
+body { font-family: 'Open Sans Condensed','Droid Serif','Open Sans', sans-serif; }
+h1, h2, h3, h4 {
+    font-family: 'Yanone Kaffeesatz';
+    font-weight: 400;
+    margin-bottom: 0;
+    margin-top: 10px;
+}
+h1 { font-size: 3.5em; }
+h2 { font-size: 3em; }
+h3 { font-size: 1.6em; }
+h4 { font-size: 1em; }
+.inverse {
+    background: #272822;
+    color: #777872;
+    text-shadow: 0 0 20px #333;
+}
+.inverse h1, .inverse h2 {
+    color: #f3f3f3;
+    line-height: 0.8em;
+}
+
+code { font-family: 'Ubuntu Mono', sans-serif !important; }
+pre code { background-color: #fff; border-top: 5px solid #ddd; border-bottom: 5px solid #ddd; margin-top: 10px;}
+h1 code { font-weight: 300; font-size: 1em !important; background-color: #eee; padding: 0px 5px; border-radius: 5px; }
+
+a {
+    color: #F92672;
+    text-decoration: none;
+}
+.task {
+    float: right;
+    font-size: 0.9em;
+    padding-top: 0.6em;
+}
+.task a {
+    color: #080;
+    text-decoration: none;
+}
+.right {
+    float: right;
+    margin-left: 1em;
+}
+.pushdown {
+    margin-top: 12em;
+}
+
+.done-true {
+  text-decoration: line-through;
+  color: grey;
+}
+
+ul.unstyled,ol.unstyled{margin-left:0;list-style:none;}
+
+.remark-visible .remark-slide-scaler {
+  overflow-y: auto;
+}
+
+.nopadding { padding:0 !important;}
+
+.red    { color: #FF4943; }
+.gray   { color: #787878; }
+.green  { color: #87A558; }
+.blue   { color: #41C8F0; }
+.yellow { color: #DBEC62; }
+.white  { color: #FFFFFF; }
+.or1 {color: #FFD740;}
+.bluelight {color: #B3E5FC;}
+.dark1 {color: #B6B6B6;}
+
+.bold { font-weight: bold; }
+
+pre {
+  background-color: transparent ; 
+  border: 0 ; 
+  border-radius: 0 ;
+  padding: 10px 0; 
+}
+.remark-code {
+  font-size: 14px;
+  line-height: 1.25;
+}
+
+.remark-code-line-highlighted {
+  font-weight: bold;
+  background-color: transparent;
+  text-shadow: 
+      0px 10px 30px rgba(255, 98, 20, .5),
+      10px 0px 30px rgba(255, 98, 20, .5),
+      -10px 0px 30px rgba(255, 98, 20, .5),
+      0px -10px 30px rgba(255, 98, 20, .5);
+}
+.reverse .remark-code-line-highlighted {
+    font-weight: normal !important;
+    color: transparent;
+    text-shadow: 0 0 5px #000;
+    font-size: 1em;
+}
+.reverse .remark-code-line { font-weight: bold; }
+
+.shade {
+    padding: 0;
+}
+
+.shade  {
+    background-color:rgba(0,0,0,0.7);
+    color: white;
+    width: 100%;
+    padding: 1em 0;
+}
+
+.shadelight  {
+    background-color:rgba(0,0,0,0.5);
+    color: white;
+    width: 100%;
+    padding: 0;
+}
+
+.fgtransparent h1 {
+  color:rgba(255,255,255,0.8) !important;
+  text-shadow: none;
+}
+
+.nosplit>div:first-of-type {width: 100%; height:100%; float:left; }
+.split-30>div:first-of-type {width: 30%; height:100%; float:left; }
+.split-30>div:nth-of-type(2) {width: 70%; height:100%; float:right;}
+.split-50>div:first-of-type {width: 50%; height:100%; float:left; }
+.split-50>div:nth-of-type(2) {width: 50%; height:100%; float:right;}
+.column_t1 {
+  background-color: #2aa9df;
+  color: white;
+}
+.column_t1 a {color: #B3E5FC;}
+.column_t1 pre code {
+  -webkit-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);  
+}
+.column_t2 {
+}
+
+.uline {text-decoration: underline;}
+
+.vmiddle {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  padding:1em;
+}
+.pushfront {
+    z-index: 2;   
+}
+.remark-slide-content .vmiddle h1 {margin-top: 0;}
+
+.boxtitle1 {
+  padding:1em;
+  text-align: left;
+  border-left: white solid 0.5em;
+  border-right: white solid 0em;
+}
+
+.figplain img {
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-top: #eee solid 20px;
+  border-bottom: #eee solid 20px;
+}
+.noborder img {border:none !important;}
+
+.figstyle1 img {
+  -webkit-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);  
+  width: 100%;
+}
+.figstyle1h img {
+  -webkit-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);  
+  max-width: 100%;
+  max-height: 600px;
+}
+.figstyle1h {}
+
+.tab1 table {
+  background: rgba(255, 255, 255, 0.12);
+  border: 4px solid #eeeeee;
+  margin: 0px auto;
+  border-collapse:collapse;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); }
+
+.tab1 table td, .tab1 table th {
+  border: 1px solid white;
+  padding: 0.25em 1em;
+  }
+
+.tab1 table th {
+  opacity: 1;
+  background-color:#ff6600;
+  vertical-align:middle;
+} 
+.fullwidth {width: 100% !important;}
+.fullheight {max-height: 100% !important;}
+
+.tab2 table {
+  background: rgba(255, 255, 255, 0.12);
+  border: 4px solid #eeeeee;
+  margin: 0px auto;
+  border-collapse:collapse;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); }
+
+.tab2 table td, .tab2 table th {
+  border: 1px solid #eee;
+  padding: 0.25em 1em;
+  }
+
+.tab2 table th {
+  opacity: 1;
+  background-color:#ff6600;
+  vertical-align:middle;
+}  
+    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://eueung.github.io/EL5244/mfizz22/font-mfizz.css">
+  </head>
+  <body>
+    <textarea id="source">
+
+
+class: split-30 nopadding
+background-image: url(https://cloud.githubusercontent.com/assets/4231611/10990736/0f353406-8489-11e5-9897-c6b3eb4b91f3.jpg)
+
+.column_t2.center[.vmiddle[
+.fgtransparent[
+# <i class="icon-python fa-4x"></i>
+]
+]]
+.column_t2[.vmiddle.nopadding[
+.shadelight[.boxtitle1[
+# IPython + [Jupyter] Notebook
+
+### [Eueung Mulyana](https://github.com/eueung)
+### http://eueung.github.io/python/ipython-intro
+#### Hint: Navigate with Arrow Keys | [Attribution-ShareAlike CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/)
+#### 
+]]
+]]
+
+---
+# Agenda
+1. Introduction to IPython
+2. IPython QtConsole
+3. Jupyter Notebook
+4. Notebook: Getting Started
+
+
+---
+class: split-30 nopadding
+background-image: url(https://cloud.githubusercontent.com/assets/4231611/10990736/0f353406-8489-11e5-9897-c6b3eb4b91f3.jpg)
+
+.column_t2.center[.vmiddle[
+.fgtransparent[
+# <i class="icon-python fa-4x"></i>
+]
+]]
+.column_t2[.vmiddle.nopadding[
+.shadelight[.boxtitle1[
+# Introduction to IPython
+#### 
+]]
+]]
+
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+One of Python’s most useful features is its interactive interpreter. It allows for very fast testing of ideas without the overhead of creating test files as is typical in most programming languages. However, the interpreter supplied with the standard Python distribution is somewhat limited for extended interactive use.
+
+###IPython
+A comprehensive environment for **interactive** and **exploratory** computing
+
+###Three Main Components:
+- An enhanced interactive Python **shell**.
+- A decoupled two-process *communication model*, which allows for multiple clients to connect to a computation kernel, most notably the web-based .yellow[**notebook**].
+- An *architecture* for interactive **parallel computing**.
+
+]]
+.column_t2[.vmiddle[
+.figplain[
+![](images/ipython-logo.png)
+]
+
+Some of the many useful features of IPython includes:
+
+- Command history, which can be browsed with the up and down arrows on the keyboard.
+- Tab auto-completion.
+- In-line editing of code.
+- Object introspection, and automatic extract of documentation strings from python objects like classes and functions.
+- Good interaction with operating system shell.
+- Support for multiple parallel back-end processes, that can run on computing clusters or cloud services like Amazon EC2.
+
+]]
+
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+.figplain[
+![](images/ipython-logo.png)
+]
+
+IPython provides a rich architecture for **interactive** computing with:
+- A powerful interactive shell.
+- A kernel for .red[**Jupyter**].
+- Easy to use, high performance tools for parallel computing.
+- .blue[Support for interactive data visualization and use of GUI toolkits.]
+- .blue[Flexible, embeddable interpreters to load into your own projects.]
+
+]]
+.column_t1[.vmiddle[
+#IPython
+
+.bluelight[IPython is an interactive shell that addresses the limitation of the standard python interpreter, and it is a work-horse for scientific use of python. It provides an interactive prompt to the python interpreter with a greatly improved user-friendliness.]
+
+It comes with a browser-based **notebook** with support for code, text, mathematical expressions, inline plots and other rich media.
+
+You don’t need to know anything beyond Python to start using IPython – just type commands as you would at the standard Python prompt. But IPython can do much more than the standard prompt... 
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+.figstyle1[
+![](images/beyond-terminal.jpg)
+]
+
+]]
+.column_t1[.vmiddle[
+#IPython
+##Beyond the Terminal ...
+- The REPL as a Network **Protocol**
+- **Kernels**
+  - Execute Code
+- **Clients**
+  - Read input
+  - Present Output
+
+Simple .uline[abstractions] enable .uline[rich], .uline[sophisticated] clients
+
+]]
+
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+###The Four Most Helpful Commands
+The four most helpful commands is shown to you in a banner, every time you start IPython:
+
+.tab1.fullwidth[
+| Command  | Description   |
+|----------|:-------------:|
+| `?` |  Introduction and overview of IPython’s features. |
+| `%quickref` |    Quick reference.   |
+| `help` | Python’s own help system. |
+| `object?` | Details about `object`, use `object??` for extra details. |
+
+]
+###Tab Completion
+Tab completion, especially for attributes, is a convenient way to explore the structure of any object you’re dealing with. Simply type `object_name.<TAB>` to view the object’s attributes. Besides Python objects and keywords, tab completion also works on file and directory names.
+
+]]
+.column_t2[.vmiddle[
+
+###Running and Editing
+The `%run` .red[**magic**] command allows you to run any python script and load all of its data directly into the interactive namespace. Since the file is re-read from disk each time, changes you make to it are reflected immediately (unlike imported modules, which have to be specifically reloaded). IPython also includes `dreload`, a recursive reload function.
+
+`%run` has special flags for timing the execution of your scripts (`-t`), or for running them under the control of either Python’s pdb debugger (`-d`) or profiler (`-p`).
+
+The `%edit` command gives a reasonable approximation of multiline editing, by invoking your favorite editor on the spot. IPython will execute the code you type in there as if it were typed interactively.
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+###Magic Functions ...
+The following examples show how to call the builtin `%timeit` magic, both in line and cell mode:
+
+```
+In [1]: %timeit range(1000)
+100000 loops, best of 3: 7.76 us per loop
+
+In [2]: %%timeit x = range(10000)
+   ...: max(x)
+   ...:
+1000 loops, best of 3: 223 us per loop
+```
+
+The builtin magics include:
+- Functions that work with code: `%run`, `%edit`, `%save`, `%macro`, `%recall`, etc.
+- Functions which affect the shell: `%colors`, `%xmode`, `%autoindent`, `%automagic`, etc.
+- Other functions such as `%reset`, `%timeit`, `%%writefile`, `%load`, or `%paste`.
+
+]]
+.column_t1[.vmiddle[
+###Exploring your Objects
+Typing `object_name?` will print all sorts of details about any object, including docstrings, function definition lines (for call arguments) and constructor details for classes. To get specific information on an object, you can use the **magic** commands `%pdoc`, `%pdef`, `%psource` and `%pfile`.
+
+###Magic Functions
+IPython has a set of predefined **magic functions** that you can call with a command line style syntax. There are two kinds of magics, line-oriented and cell-oriented. 
+- .yellow[**Line magics**] are prefixed with the `%` character and work much like OS command-line calls: they get as an argument the rest of the line, where arguments are passed without parentheses or quotes. 
+- .yellow[**Cell magics**] are prefixed with a double `%%`, and they are functions that get as an argument not only the rest of the line, but also the lines below it in a separate argument.
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+###System Shell Commands
+To run any command at the system shell, simply prefix it with `!`. You can capture the output into a Python list. To pass the values of Python variables or expressions to system commands, prefix them with `$`.
+
+####System Aliases
+It’s convenient to have aliases to the system commands you use most often. This allows you to work seamlessly from inside IPython with the same commands you are used to in your system shell. IPython comes with some pre-defined aliases and a complete system for changing directories, both via a stack (`%pushd`, `%popd` and `%dhist`) and via direct %cd. The latter keeps a history of visited directories and allows you to go to any previously visited one.
+
+]]
+.column_t2[.vmiddle[
+###Magic Functions ...
+
+You can always call them using the `%` prefix, and if you’re calling a line magic on a line by itself, you can omit even that: `run thescript.py`. You can toggle this behavior by running the `%automagic` magic. 
+
+Cell magics must always have the `%%` prefix.
+
+A more detailed explanation of the magic system can be obtained by calling `%magic`, and for more details on any magic function, call `%somemagic?` to read its docstring. To see all the available magic functions, call `%lsmagic`.
+
+###System Shell Commands ...
+
+```
+!ping www.bbc.co.uk
+
+*files = !ls                   # capture
+
+!grep -rF $pattern ipython/*  # passing vars
+```
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+###History ...
+Input and output history are kept in variables called In and Out, keyed by the prompt numbers. The last three objects in output history are also kept in variables named `_`, `__` and `___`.
+
+You can use the `%history` magic function to examine past input and output. Input history from previous sessions is saved in a database, and IPython can be configured to save output history.
+
+Several other magic functions can use your input history, including `%edit`, `%rerun`, `%recall`, `%macro`, `%save` and `%pastebin`. You can use a standard format to refer to lines:
+
+```
+%pastebin 3 18-20 ~1/1-5
+```
+
+This will take line 3 and lines 18 to 20 from the current session, and lines 1-5 from the previous session.
+
+]]
+.column_t1[.vmiddle[
+###History
+IPython stores both the commands you enter, and the results it produces. You can easily go through previous commands with the up- and down-arrow keys, or access your history in more sophisticated ways.
+
+###Debugging
+After an exception occurs, you can call `%debug` to jump into the Python debugger (pdb) and examine the problem. Alternatively, if you call `%pdb`, IPython will automatically start the debugger on any uncaught exception. You can print variables, see code, execute statements and even walk up and down the call stack to track down the true source of the problem. This can be an efficient way to develop and debug code, in many cases eliminating the need for print statements or external debugging tools.
+
+You can also step through a program from the beginning by calling `%run -d theprogram.py`.
+
+]]
+
+---
+class: split-30 nopadding
+background-image: url(https://cloud.githubusercontent.com/assets/4231611/10990736/0f353406-8489-11e5-9897-c6b3eb4b91f3.jpg)
+
+.column_t2.center[.vmiddle[
+.fgtransparent[
+# <i class="icon-python fa-4x"></i>
+]
+]]
+.column_t2[.vmiddle.nopadding[
+.shadelight[.boxtitle1[
+# IPython QtConsole
+#### 
+]]
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+
+.figstyle1[
+![](images/fig01-qtconsole.jpg)
+]
+
+- To force multiline input, hit `Ctrl-Enter` at the end of the first line instead of `Enter`
+- `Shift-Enter` to execute!
+
+]]
+.column_t2[.vmiddle[
+
+# IPython QtConsole
+
+- a version of IPython, using the new two-process ZeroMQ Kernel, running in a **PyQt** GUI
+- a very *lightweight* widget that largely feels like a **terminal**, but provides a number of enhancements only possible in a GUI, such as inline figures, proper multiline editing with syntax highlighting, graphical calltips, and much more.
+
+```
+# To start the Qt Console
+ipython qtconsole
+
+# To see a quick introduction of the main features 
+%guiref 
+```
+
+See: [Qt Console @ RTD](http://ipython.readthedocs.org/en/stable/interactive/qtconsole.html)
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+
+.figstyle1h.center[
+![](images/qtconsole.jpg)
+]
+
+
+]]
+.column_t2[.vmiddle[
+
+# IPython QtConsole
+### MF `%load`
+The new `%load` magic takes any script, and pastes its contents as your next input, so you can edit it before executing. The script may be on your machine, but you can also specify an history range, or a url, and it will download the script from the web. This is particularly useful for playing with examples from documentation, such as matplotlib.
+
+```
+In [6]: %load http://matplotlib.org/plot_directive/mpl_examples/mplot3d/contour3d_demo.py
+
+In [7]: from mpl_toolkits.mplot3d import axes3d
+   ...: import matplotlib.pyplot as plt
+   ...:
+   ...: fig = plt.figure()
+   ...: ax = fig.add_subplot(111, projection='3d')
+   ...: X, Y, Z = axes3d.get_test_data(0.05)
+   ...: cset = ax.contour(X, Y, Z)
+   ...: ax.clabel(cset, fontsize=9, inline=1)
+   ...:
+   ...: plt.show()
+```
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+### MF `%load` ...
+The `%load` magic can also load source code from objects in the user or global namespace by invoking the `-n` option.
+
+```
+In [1]: import hello_world
+   ...: %load -n hello_world.say_hello
+
+In [3]: def say_hello() :
+   ...:    print("Hello World!")
+```
+
+###Inline Matplotlib
+One of the most exciting features of the QtConsole is embedded matplotlib figures. You can use any standard matplotlib GUI backend to draw the figures, and since there is now a two-process model, there is no longer a conflict between user input and the drawing eventloop.
+
+]]
+.column_t1[.vmiddle[
+.figstyle1.center[
+![](images/qtconsole2.jpg)
+]
+
+
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+
+If you have a reference to a matplotlib figure object, you can always display that specific figure:
+
+```
+In [1]: f = plt.figure()
+
+In [2]: plt.plot(np.rand(100))
+Out[2]: [<matplotlib.lines.Line2D at 0x7fc6ac03dd90>]
+
+In [3]: display(f)
+
+# Plot is shown here
+
+In [4]: plt.title('A title')
+Out[4]: <matplotlib.text.Text at 0x7fc6ac023450>
+
+In [5]: display(f)
+
+# Updated plot with title is shown here.
+```
+
+]]
+.column_t2[.vmiddle[
+### Matplotlib: `display()`
+IPython provides a function `display() `for displaying rich representations of objects if they are available. The IPython display system provides a mechanism for specifying PNG or SVG (and more) representations of objects for GUI frontends. When you enable matplotlib integration via the %matplotlib magic, IPython registers convenient PNG and SVG renderers for matplotlib figures, so you can embed them in your document by calling display() on one or more of them. This is especially useful for saving your work.
+
+```
+In [4]: from IPython.display import display
+
+In [5]: plt.plot(range(5)) # plots in the matplotlib window
+
+In [6]: display(plt.gcf()) # embeds the current figure in the qtconsole
+
+In [7]: display(*getfigs()) # embeds all active figures in the qtconsole
+```
+
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+###`--matplotlib inline`
+If you want to have all of your figures embedded in your session, instead of calling `display()`, you can specify `--matplotlib inline` when you start the console, and each time you make a plot, it will show up in your document, as if you had called `display(fig)()`.
+
+The inline backend can use either SVG or PNG figures (PNG being the default). To switch between them, set the InlineBackend.figure_format configurable in a config file, or via the `%config` magic:
+
+```
+In [10]: %config InlineBackend.figure_format = 'svg'
+```
+
+Changing the inline figure format also affects calls to display() above, even if you are not using the inline backend for all figures.
+
+```
+*In [13]: [ fig.close() for fig in getfigs() ]
+```
+
+]]
+.column_t1[.vmiddle[
+
+By default, IPython closes all figures at the completion of each execution. It also means that the first matplotlib call in each cell will always create a new figure. However, it does prevent the list of active figures surviving from one input cell to the next, so if you want to continue working with a figure, you must hold on to a .uline[reference] to it.
+
+```
+In [11]: plt.plot(range(100))
+<single-line plot>
+
+In [12]: plt.plot([1,3,2])
+<another single-line plot>
+# -----
+*In [11]: fig = gcf()
+   ....: fig.plot(rand(100))
+<plot>
+In [12]: fig.title('Random Title')
+<redraw plot with title>
+```
+
+This behavior is controlled by the **InlineBackend.close_figures** configurable, and if you set it to **False**, via **%config** or config file, then IPython will not close figures, and tools like **gcf()**, **gca()**, **getfigs()** will behave the same as they do with other backends. You will, however, have to manually close figures:
+
+
+]]
+
+---
+class: split-30 nopadding
+background-image: url(https://cloud.githubusercontent.com/assets/4231611/10990736/0f353406-8489-11e5-9897-c6b3eb4b91f3.jpg)
+
+.column_t2.center[.vmiddle[
+.fgtransparent[
+# <i class="icon-python fa-4x"></i>
+]
+]]
+.column_t2[.vmiddle.nopadding[
+.shadelight[.boxtitle1[
+# Jupyter Notebook
+#### 
+]]
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+
+.figplain.noborder[
+![](images/logo-jupyter.svg)
+]
+
+.figstyle1[
+![](images/fig02-jupyter.jpg)
+]
+
+
+]]
+.column_t2[.vmiddle[
+
+# Jupyter Notebook
+
+The Jupyter Notebook is a web application for **interactive** data science and scientific computing.
+
+Using the Jupyter Notebook, you can author engaging documents that .uline[combine] live-code with narrative text, equations, images, video, and visualizations. By encoding a complete and reproducible record of a computation, the documents can be shared with others on GitHub, Dropbox, and the Jupyter Notebook Viewer.
+
+```
+# Install
+sudo apt-get install build-essential python-dev
+pip install jupyter
+
+# Start
+jupyter notebook
+
+# Previously
+pip install "ipython[notebook]"
+ipython notebook
+```
+
+See: [Jupyter@RTD](https://jupyter.readthedocs.org/en/latest/)
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+
+.figplain[
+![](images/logo-jupyter.svg)
+]
+
+- Open source, interactive data science and scientific computing across over 40 programming languages.
+- .blue[The Jupyter Notebook is a web application that allows you to create and share documents that contain live code, equations, visualizations and explanatory text.] 
+- Uses include: data cleaning and transformation, numerical simulation, statistical modeling, machine learning and much more.
+
+###Language of Choice
+The Notebook has support for over 40 programming languages, including those popular in Data Science such as Python, R, Julia and Scala.
+
+
+]]
+.column_t1[.vmiddle[
+###Share Notebooks
+Notebooks can be shared with others using email, Dropbox, GitHub and the Jupyter Notebook Viewer.
+
+###Interactive Widgets
+Code can produce rich output such as images, videos, LaTeX, and JavaScript. Interactive widgets can be used to manipulate and visualize data in realtime.
+
+###Big-Data Integration
+Leverage big data tools, such as Apache Spark, from Python, R and Scala. Explore that same data with pandas, scikit-learn, ggplot2, dplyr, etc.
+
+.yellow[See]: [Jupyter.ORG Website](http://jupyter.org/)
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+.figstyle1[
+![](images/perez01.jpg)
+]
+
+]]
+.column_t2[.vmiddle[
+# Project Jupyter
+###The IPython Notebook (2011)
+
+- Rich Web Client
+- Text & Math
+- Code
+- Results
+- Share, Reproduce.
+
+See: **Fernando Perez**, [IPython & Project Jupyter](https://speakerdeck.com/fperez/ipython-and-project-jupyter-a-language-independent-architecture-for-open-computing-and-data-science)
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+# Project Jupyter
+
+###IPython
+- Interactive Python shell at the terminal
+- Kernel for this protocol in Python
+- Tools for Interactive Parallel computing
+
+###Jupyter
+- Network protocol for interactive computing
+- Clients for protocol
+  - Console
+  - Qt Console
+  - Notebook
+- Notebook file format & tools (nbconvert...)
+- Nbviewer
+
+]]
+.column_t2[.vmiddle[
+.figplain.noborder[
+![](images/logo-jupyter.svg)
+]
+
+###What’s in a name?
+
+- Inspired by the open languages of science: 
+  - Julia, Python & R
+  - Not an acronym: all languages equal class citizens.
+- Astronomy and Scientific Python: A long and fruitful collaboration
+- Galileo's notebooks: 
+  - The original, open science, data-and-narrative papers
+  - Authorea: “Science was Always meant to be Open”
+
+See: **Fernando Perez**, [IPython & Project Jupyter](https://speakerdeck.com/fperez/ipython-and-project-jupyter-a-language-independent-architecture-for-open-computing-and-data-science)
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+# Project Jupyter
+
+###From IPython to Project Jupyter
+
+- Not just about Python: Kernels in **any** language
+- IPython : "Official"
+- IJulia, IRKernel, IHaskell, IFSharp, Ruby, IScala, IErlang, .. Lots more! ~37 and counting
+- Why is it called IPython, if it can do Julia, R, Haskell, Ruby, … ?”
+
+### TL;DR
+- Separation of the .uline[language-agnostic] components
+- **Jupyter**: protocol, format, multi-user server
+- **IPython**: interactive Python console, Jupyter kernel
+- Jupyter kernels = Languages which can be used from the notebook (37 and counting)
+
+]]
+.column_t1[.vmiddle[
+
+### A Simple and Generic Architecture
+####&nbsp;
+
+.figstyle1[
+![](images/perez02.jpg)
+]
+
+See: **Fernando Perez**, [IPython & Project Jupyter](https://speakerdeck.com/fperez/ipython-and-project-jupyter-a-language-independent-architecture-for-open-computing-and-data-science)
+
+]]
+
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+
+
+
+
+]]
+.column_t1[.vmiddle[
+
+
+
+### .yellow[Convention]
+.bluelight[In this document, we use the terms **Jupyter** and **IPython** Notebooks .uline[interchangeably]]. It might refer to the previous version of the Notebook (IPython).
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+###The Notebook
+Notebook mode supports **literate computing** and **reproducible** sessions 
+- Allows to store chunks of python along side the results and additional comments (HTML, Latex, MarkDown)
+- Can be exported in various file formats
+
+Notebook are the de-facto standard for sharing python sessions.
+
+]]
+.column_t1[.vmiddle[
+###The Notebook: “Literate Computing”
+
+Computational Narratives
+- Computers deal with .uline[code] and .uline[data].
+- Humans deal with narratives that .uline[communicate].
+
+Literate Computing (not Literate Programming) 
+- Narratives anchored in a live computation, that communicate a story based on data and results.
+
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+.figstyle1[
+![](images/nbviewer.jpg)
+]
+
+]]
+.column_t2[.vmiddle[
+###Seamless Notebook Sharing
+###**nbviewer**
+- Zero-install reading of notebooks
+- Just share a URL 
+- [nbviewer.ipython.org](http://nbviewer.ipython.org)
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+.figstyle1[
+![](images/signal-processing.jpg)
+]
+
+]]
+.column_t1[.vmiddle[
+###Jupyter Ecosystem
+- Reproducible Research
+- Paper, Notebooks and Virtual Machine
+- Scientific Blogging
+- .bluelight[Executable books]
+- MOOCs and University Courses
+- Executable Papers
+- ...
+
+###Jose Unpingco
+###.bluelight[Python for Signal Processing]
+- Springer hardcover book
+- Chapters: IPython Notebooks
+- Posted as a blog entry
+- All available as a Github repo
+
+]]
+
+---
+class: nosplit nopadding
+
+.column_t1[.vmiddle[
+# Notebook Workflows
+####&nbsp;
+.figstyle1[
+![](images/nb-workflow.jpg)
+]
+
+Credit: Joshua Barrat (via F. Perez)
+]]
+
+---
+class: split-30 nopadding
+background-image: url(https://cloud.githubusercontent.com/assets/4231611/10990736/0f353406-8489-11e5-9897-c6b3eb4b91f3.jpg)
+
+.column_t2.center[.vmiddle[
+.fgtransparent[
+# <i class="icon-python fa-4x"></i>
+]
+]]
+.column_t2[.vmiddle.nopadding[
+.shadelight[.boxtitle1[
+# Notebook: Getting Started
+#### 
+]]
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+#Review
+###IPython Notebook
+IPython notebook is an HTML-based notebook environment for Python. It is based on the IPython shell, but provides a cell-based environment with great interactivity, where calculations can be organized and documented in a structured way.
+
+Although using a web browser as graphical interface, IPython notebooks are usually run locally, from the same computer that run the browser. 
+
+###IPython Notebook
+- Web-based user interface to IPython, Interactive Python interpreter in the browser
+- Literate computing, Open format combining executable code, text and multimedia
+- .bluelight[Pretty graphs]
+- .bluelight[Version controlled science!]
+
+]]
+.column_t2[.vmiddle[
+
+To start a new IPython notebook session, run the following command: 
+
+```
+ipython notebook
+# or 
+jupyter notebook
+```
+from a directory where you want the notebooks to be stored. 
+
+This will open a new browser window (or a new tab in an existing window) with an index page where existing notebooks are shown and from which new notebooks can be created.
+
+]]
+
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+
+.figstyle1[
+![](images/fig03.jpg)
+]
+
+.figstyle1[
+![](images/fig04.jpg)
+]
+
+
+]]
+.column_t2[.vmiddle[
+# Up and Running
+An IPython notebook lets you write and execute Python code in your web browser. IPython notebooks make it very easy to tinker with code and execute it in bits and pieces; for this reason IPython notebooks are widely used in scientific computing.
+
+Once IPython is running, point your web browser at http://localhost:8888 to start using IPython notebooks. If everything worked correctly, you should see a screen showing all available IPython notebooks in the current directory.
+
+If you click through to a notebook file, it will be executed and displayed on a new page.
+
+See: **CS231n**: [IPython Tutorial](http://cs231n.github.io/ipython-tutorial/)
+
+]]
+
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+# Up and Running
+An IPython notebook is made up of a number of **cells**. Each cell can contain Python code. You can execute a cell by clicking on it and pressing `Shift-Enter`. When you do so, the code in the cell will run, and the output of the cell will be displayed beneath the cell. See example.
+
+Global variables are shared between cells. See the notebook after executing the second cell.
+
+By convention, IPython notebooks are expected to be run .uline[from top to bottom]. Failing to execute some cells or executing cells out of order can result in errors.
+
+See: **CS231n**: [IPython Tutorial](http://cs231n.github.io/ipython-tutorial/)
+
+]]
+.column_t1[.vmiddle[
+
+.figstyle1[
+![](images/fig05.jpg)
+]
+
+.figstyle1[
+![](images/fig06.jpg)
+]
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+.figplain.noborder[
+![](images/logo-jupyter.svg)
+]
+
+]]
+.column_t1[.vmiddle[
+# Collections and Links
+- [A gallery of interesting IPython Notebooks](https://github.com/ipython/ipython/wiki/A-gallery-of-interesting-IPython-Notebooks)
+
+# Notebooks for Learning
+- [Python Fundamentals | DLAB @ Berkeley](https://github.com/dlab-berkeley/python-fundamentals)
+- [Python Lectures | Rajath Kumar MP](https://github.com/rajathkumarmp/Python-Lectures)
+- [Intro Programming | Eric Matthes](https://github.com/ehmatthes/intro_programming)
+- [Python Crash Course | Eric Matthes](https://github.com/ehmatthes/pcc)
+- [IPython Minibook | Cyrille Rossant](https://github.com/rossant/ipython-minibook)
+- [IPython & Project Jupyter | Fernando Perez](https://github.com/fperez/talk-1504-boulder)
+
+]]
+
+---
+
+# References
+
+1. [IPython Documentation](http://ipython.readthedocs.org/en/stable/index.html) @ readthedocs.org
+2. [Jupyter Documentation](https://jupyter.readthedocs.org/en/latest/) @ readthedocs.org
+1. **Fernando Perez**, IPython & Project Jupyter | A language-independent architecture for open computing and data science
+2. **Juan Luis Cano Rodriguez**, IPython: How a notebook is changing science | Python as a real alternative to MATLAB, Mathematica and other commercial software
+3. **Olivier Hervieu**: Introduction to scientific programming in python 
+4. **CS231n**: IPython Tutorial, http://cs231n.github.io/ipython-tutorial/
+5. **J.R. Johansson**: Introduction to scientific computing with Python
+
+---
+class: split-30 nopadding
+background-image: url(https://cloud.githubusercontent.com/assets/4231611/10990736/0f353406-8489-11e5-9897-c6b3eb4b91f3.jpg)
+
+.column_t2.center[.vmiddle[
+.fgtransparent[
+# <i class="icon-python fa-4x"></i>
+]
+]]
+.column_t2[.vmiddle.nopadding[
+.shadelight[.boxtitle1[
+# END
+
+### [Eueung Mulyana](https://github.com/eueung)
+### http://eueung.github.io/python/ipython-intro
+#### Hint: Navigate with Arrow Keys | [Attribution-ShareAlike CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/)
+#### 
+]]
+]]
+
+
+
+    </textarea>
+    <script src="https://gnab.github.io/remark/downloads/remark-0.12.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create({highlightLanguage:'python', highlightStyle: 'tomorrow', highlightLines: true});
+    </script>
+  </body>
+</html>
