@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Scientific Python</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Open+Sans);
+
+body { font-family: 'Open Sans Condensed','Droid Serif','Open Sans', sans-serif; }
+h1, h2, h3, h4 {
+    font-family: 'Yanone Kaffeesatz';
+    font-weight: 400;
+    margin-bottom: 0;
+    margin-top: 10px;
+}
+h1 { font-size: 3.5em; }
+h2 { font-size: 3em; }
+h3 { font-size: 1.6em; }
+h4 { font-size: 1em; }
+.inverse {
+    background: #272822;
+    color: #777872;
+    text-shadow: 0 0 20px #333;
+}
+.inverse h1, .inverse h2 {
+    color: #f3f3f3;
+    line-height: 0.8em;
+}
+
+code { font-family: 'Ubuntu Mono', sans-serif !important; }
+pre code { background-color: #fff; border-top: 5px solid #ddd; border-bottom: 5px solid #ddd; margin-top: 10px;}
+h1 code { font-weight: 300; font-size: 1em !important; background-color: #eee; padding: 0px 5px; border-radius: 5px; }
+
+a {
+    color: #F92672;
+    text-decoration: none;
+}
+.task {
+    float: right;
+    font-size: 0.9em;
+    padding-top: 0.6em;
+}
+.task a {
+    color: #080;
+    text-decoration: none;
+}
+.right {
+    float: right;
+    margin-left: 1em;
+}
+.pushdown {
+    margin-top: 12em;
+}
+
+.done-true {
+  text-decoration: line-through;
+  color: grey;
+}
+
+ul.unstyled,ol.unstyled{margin-left:0;list-style:none;}
+
+.remark-visible .remark-slide-scaler {
+  overflow-y: auto;
+}
+
+.nopadding { padding:0 !important;}
+
+.red    { color: #FF4943; }
+.gray   { color: #787878; }
+.green  { color: #87A558; }
+.blue   { color: #41C8F0; }
+.yellow { color: #DBEC62; }
+.white  { color: #FFFFFF; }
+.or1 {color: #FFD740;}
+.bluelight {color: #B3E5FC;}
+.dark1 {color: #B6B6B6;}
+
+.bold { font-weight: bold; }
+
+pre {
+  background-color: transparent ; 
+  border: 0 ; 
+  border-radius: 0 ;
+  padding: 10px 0; 
+}
+.remark-code {
+  font-size: 14px;
+  line-height: 1.25;
+}
+
+.remark-code-line-highlighted {
+  font-weight: bold;
+  background-color: transparent;
+  text-shadow: 
+      0px 10px 30px rgba(255, 98, 20, .5),
+      10px 0px 30px rgba(255, 98, 20, .5),
+      -10px 0px 30px rgba(255, 98, 20, .5),
+      0px -10px 30px rgba(255, 98, 20, .5);
+}
+.reverse .remark-code-line-highlighted {
+    font-weight: normal !important;
+    color: transparent;
+    text-shadow: 0 0 5px #000;
+    font-size: 1em;
+}
+.reverse .remark-code-line { font-weight: bold; }
+
+.shade {
+    padding: 0;
+}
+
+.shade  {
+    background-color:rgba(0,0,0,0.7);
+    color: white;
+    width: 100%;
+    padding: 1em 0;
+}
+
+.shadelight  {
+    background-color:rgba(0,0,0,0.5);
+    color: white;
+    width: 100%;
+    padding: 0;
+}
+
+.fgtransparent h1 {
+  color:rgba(255,255,255,0.8) !important;
+  text-shadow: none;
+}
+
+.nosplit>div:first-of-type {width: 100%; height:100%; float:left; }
+.split-30>div:first-of-type {width: 30%; height:100%; float:left; }
+.split-30>div:nth-of-type(2) {width: 70%; height:100%; float:right;}
+.split-50>div:first-of-type {width: 50%; height:100%; float:left; }
+.split-50>div:nth-of-type(2) {width: 50%; height:100%; float:right;}
+.column_t1 {
+  background-color: #2aa9df;
+  color: white;
+}
+.column_t1 a {color: #B3E5FC;}
+.column_t1 pre code {
+  -webkit-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);  
+}
+.column_t2 {
+}
+
+.uline {text-decoration: underline;}
+
+.vmiddle {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  padding:1em;
+}
+.pushfront {
+    z-index: 2;   
+}
+.remark-slide-content .vmiddle h1 {margin-top: 0;}
+
+.boxtitle1 {
+  padding:1em;
+  text-align: left;
+  border-left: white solid 0.5em;
+  border-right: white solid 0em;
+}
+
+.figplain img {
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-top: #eee solid 20px;
+  border-bottom: #eee solid 20px;
+}
+.noborder img {border:none !important;}
+
+.figstyle1 img {
+  -webkit-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);  
+  width: 100%;
+}
+.figstyle1h img {
+  -webkit-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);  
+  max-width: 100%;
+  max-height: 600px;
+}
+.figstyle1h {}
+
+.tab1 table {
+  background: rgba(255, 255, 255, 0.12);
+  border: 4px solid #eeeeee;
+  margin: 0px auto;
+  border-collapse:collapse;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); }
+
+.tab1 table td, .tab1 table th {
+  border: 1px solid white;
+  padding: 0.25em 1em;
+  }
+
+.tab1 table th {
+  opacity: 1;
+  background-color:#ff6600;
+  vertical-align:middle;
+} 
+.fullwidth {width: 100% !important;}
+.fullheight {max-height: 100% !important;}
+
+.tab2 table {
+  background: rgba(255, 255, 255, 0.12);
+  border: 4px solid #eeeeee;
+  margin: 0px auto;
+  border-collapse:collapse;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); }
+
+.tab2 table td, .tab2 table th {
+  border: 1px solid #eee;
+  padding: 0.25em 1em;
+  }
+
+.tab2 table th {
+  opacity: 1;
+  background-color:#ff6600;
+  vertical-align:middle;
+}  
+
+    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://eueung.github.io/EL5244/mfizz22/font-mfizz.css">
+  </head>
+  <body>
+    <textarea id="source">
+
+
+class: split-30 nopadding
+background-image: url(https://cloud.githubusercontent.com/assets/4231611/11257865/47de7fee-8e87-11e5-8995-170ed746cf64.jpg)
+
+.column_t2.center[.vmiddle[
+.fgtransparent[
+# <i class="icon-python fa-4x"></i>
+]
+]]
+.column_t2[.vmiddle.nopadding[
+.shadelight[.boxtitle1[
+# Scientific Python
+
+### [Eueung Mulyana](https://github.com/eueung)
+### http://eueung.github.io/python/sci
+#### Hint: Navigate with Arrow Keys | [Attribution-ShareAlike CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/)
+#### 
+]]
+]]
+
+---
+
+# Agenda
+
+1. Jupyter / IPython
+2. NumPy
+3. SciPy
+4. matplotlib
+5. pandas
+6. SymPy
+7. scikit-learn
+8. jakevdp: The State of the Stack
+
+---
+class: split-30 nopadding
+background-image: url(https://cloud.githubusercontent.com/assets/4231611/11257865/47de7fee-8e87-11e5-8995-170ed746cf64.jpg)
+
+.column_t2.center[.vmiddle[
+.fgtransparent[
+# <i class="icon-python fa-4x"></i>
+]
+]]
+.column_t2[.vmiddle.nopadding[
+.shadelight[.boxtitle1[
+# Jupyter / IPython
+#### 
+]]
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+
+.figstyle1[
+![](images/ipython.jpg)
+]
+
+]]
+.column_t2[.vmiddle[
+#IPython
+- Powerful **interactive** shell
+- Supports .uline[tab completion] of just about everything
+- Inline help system for modules, classes etc. with .red[`?`], source code with .red[`??`]
+- Browser based **notebook** (Jupyter) with support for (.uline[runnable]) code, text, mathematical expressions using LATEX, inline plots etc.
+- Could be used as a computational lab notes/worksheets
+- **Magic** functions to access the shell, run R code etc.
+- Parallel computing
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+
+.figstyle1[
+![](images/fig01.jpg)
+]
+
+####&nbsp;
+####Notes on Jupyter
+1. The Jupyter Notebook works with over 40 languages
+2. Jupyter Notebooks **render** on GitHub
+
+]]
+.column_t1[.vmiddle[
+#Jupyter
+##Computational Narratives
+1. Computers are optimized for producing, consuming and processing **data**.
+2. Humans are optimized for producing, consuming and processing **narratives**/stories.
+3. For .uline[code] and .uline[data] to be useful to humans, we need tools for creating and sharing **narratives** that involve code and data.
+
+The **Jupyter Notebook** is a tool for creating and sharing .uline[computational narratives].
+]]
+
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+## Jupyter & Data Science
+The Jupyter Notebook is a tool that allows us to explore the fundamental
+questions of Data Science
+- with a particular **dataset**
+- with .uline[code] and .uline[data]
+- in a manner that produces a computational **narrative**
+- that can be .uline[shared], reproduced, .uline[modified], and extended.
+
+At the end of it all, those computational narratives encapsulate the goal
+or *end point* of Data Science. The character of the narrative (prediction, inference, data generation,
+.red[**insight**], etc.) will vary from case to case.
+
+```
+
+*The purpose of computing is insight, not numbers.
+
+Hamming, Richard (1962). Numerical Methods for Scientists and Engineers. 
+```
+]]
+.column_t1[.vmiddle[
+
+.figstyle1[
+![](images/jupyter.jpg)
+]
+
+]]
+
+---
+class: split-30 nopadding
+background-image: url(https://cloud.githubusercontent.com/assets/4231611/11257865/47de7fee-8e87-11e5-8995-170ed746cf64.jpg)
+
+.column_t2.center[.vmiddle[
+.fgtransparent[
+# <i class="icon-python fa-4x"></i>
+]
+]]
+.column_t2[.vmiddle.nopadding[
+.shadelight[.boxtitle1[
+# NumPy
+#### 
+]]
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+#NumPy
+
+NumPy is the fundamental package for scientific computing with Python. It contains among other things:
+- A powerful N-dimensional array object
+- Sophisticated (broadcasting) functions
+- Tools for integrating C/C++ and Fortran code
+- Useful linear algebra, Fourier transform, and random number capabilities
+
+Besides its obvious scientific uses, NumPy can also be used as an efficient multi-dimensional container of generic data.
+
+Arbitrary data-types can be defined. This allows NumPy to seamlessly and speedily integrate with a wide variety of databases.
+
+]]
+.column_t2[.vmiddle[
+.figstyle1[
+![](images/numpy.jpg)
+]
+
+NumPy provides a powerful N-dimensions array object
+- Methods on these arrays are fast because they relies on well-optimised librairies for linear algebra (BLAS, ATLAS, MKL)
+- NumPy is tolerant to python’s lists
+
+NumPy inherits from years of computer based numerical analysis problem solving
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+
+```
+import numpy as np
+
+*a = np.array([1, 2, 3])  # Create a rank 1 array
+print type(a)            # Prints "<type 'numpy.ndarray'>"
+print a.shape            # Prints "(3,)"
+*print a[0], a[1], a[2]   # Prints "1 2 3"
+a[0] = 5                 # Change an element of the array
+print a                  # Prints "[5, 2, 3]"
+
+b = np.array([[1,2,3],[4,5,6]])   # Create a rank 2 array
+*print b.shape                     # Prints "(2, 3)"
+print b[0, 0], b[0, 1], b[1, 0]   # Prints "1 2 4"
+
+# -----
+*a = np.zeros((2,2))  # Create an array of all zeros
+print a              # Prints "[[ 0.  0.]
+                     #          [ 0.  0.]]"
+
+*b = np.ones((1,2))   # Create an array of all ones
+print b              # Prints "[[ 1.  1.]]"
+
+*c = np.full((2,2), 7) # Create a constant array
+print c               # Prints "[[ 7.  7.]
+                      #          [ 7.  7.]]"
+
+*d = np.eye(2)        # Create a 2x2 identity matrix
+print d              # Prints "[[ 1.  0.]
+                     #          [ 0.  1.]]"
+
+*e = np.random.random((2,2)) # Create an array filled with random values
+print e                     # Might print "[[ 0.91940167  0.08143941]
+                            #               [ 0.68744134  0.87236687]]"
+```
+
+]]
+.column_t1[.vmiddle[
+# Numpy
+
+Numpy is the *core* library for *scientific computing* in Python. It provides a high-performance .uline[multidimensional] array object (MATLAB style), and *tools* for working with these arrays. 
+
+###Arrays
+- .bluelight[A numpy array is a grid of values, all of the *same* type, and is indexed by a *tuple* of nonnegative integers.] 
+- The number of dimensions is the *rank* of the array; the .uline[shape] of an array is a tuple of integers giving the .uline[size] of the array along *each dimension*.
+- .bluelight[We can initialize numpy arrays from *nested* Python lists, and access elements using *square brackets*.]
+- Numpy also provides .uline[many] functions to *create* arrays.
+]]
+
+
+---
+class: split-30 nopadding
+background-image: url(https://cloud.githubusercontent.com/assets/4231611/11257865/47de7fee-8e87-11e5-8995-170ed746cf64.jpg)
+
+.column_t2.center[.vmiddle[
+.fgtransparent[
+# <i class="icon-python fa-4x"></i>
+]
+]]
+.column_t2[.vmiddle.nopadding[
+.shadelight[.boxtitle1[
+# SciPy
+#### 
+]]
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+#SciPy
+SciPy is a Python-based ecosystem of open-source software for mathematics, science, and engineering. SciPy core packages: IPython, NumPy, SciPy Library, SimPy, matplotlib, pandas.
+
+#SciPy .bluelight[Library]
+SciPy is a collection of mathematical algorithms and convenience functions built on top of NumPy includes modules for: statistics, integration & ODE solvers, linear algebra, optimization, FFT, etc.
+
+We use the terms .bluelight[SciPy] and .bluelight[SciPy Library] interchangeably. Meaning depends on context.
+
+SciPy is a toolbox for researchers/scientists, it contains many hidden treasures for them.
+
+]]
+.column_t2[.vmiddle[
+
+.figstyle1[
+![](images/scipy.jpg)
+]
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+#SciPy & NumPy
+**Numpy** provides a high-performance multidimensional array and basic tools to compute with and manipulate these arrays. 
+
+**SciPy** builds on this, and provides a large number of functions that *operate on numpy arrays* and are useful for different types of scientific and engineering applications. 
+
+SciPy provides numerous numerical routines, that run efficiently on top of NumPy arrays for: optimization, signal processing, linear algebra and many more. It also provides some convenient data structures as compressed sparse matrix and spatial data structures. If you had already use some **scikits** (scikit-learn, scikit-image) you already used scipy extensively. 
+
+]]
+.column_t1[.vmiddle[
+A few thoughts on SciPy:
+- Contains linear algebra routines that .uline[overlap] with NumPy; SciPy’s linear algebra routines .uline[always] run on the optimized system libraries (LAPACK, ATLAS, Intel Math Kernel Library, etc.)
+- Sparse matrix support
+- Extends NumPy’s statistical capabilities
+- Under active development, new toys added constantly!
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+
+#SciPy 
+A big box of tools:
+- Special functions (.bluelight[scipy.special])
+- Integration (.bluelight[scipy.integrate])
+- Optimization (.bluelight[scipy.optimize])
+- Interpolation (.bluelight[scipy.interpolate])
+- Fourier Transforms (.bluelight[scipy.fftpack])
+- Signal Processing (.bluelight[scipy.signal])
+- Statistics (.bluelight[scipy.stats])
+- Linear Algebra (.bluelight[scipy.linalg])
+- File IO (.bluelight[scipy.io])
+
+
+- Sparse Eigenvalue Problems with ARPACK
+- Compressed Sparse Graph Routines (.bluelight[scipy.sparse.csgraph])
+- Spatial data structures and algorithms (.bluelight[scipy.spatial])
+- Multi-dimensional image processing (.bluelight[scipy.ndimage])
+- Weave (.bluelight[scipy.weave])
+
+]]
+.column_t2[.vmiddle[
+
+```
+
+*from scipy.stats import linregress
+(slope, intercept, r, p, se) = linregress(x, noisy_y)
+
+# ---
+
+*from scipy.stats import spearmanr, pearsonr
+
+x_cubed = x ** 3
+x_cubed += np.random.normal(0,3,10)
+
+```
+
+]]
+
+---
+class: split-30 nopadding
+background-image: url(https://cloud.githubusercontent.com/assets/4231611/11257865/47de7fee-8e87-11e5-8995-170ed746cf64.jpg)
+
+.column_t2.center[.vmiddle[
+.fgtransparent[
+# <i class="icon-python fa-4x"></i>
+]
+]]
+.column_t2[.vmiddle.nopadding[
+.shadelight[.boxtitle1[
+# matplotlib
+#### 
+]]
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+
+.figstyle1[
+![](images/matplotlib.jpg)
+]
+
+]]
+.column_t2[.vmiddle[
+# matplotlib
+The ultimate plotting library that renders 2D and 3D high-quality plots for python.
+- **pyplot** implements Matlab-style plotting
+- Object-oriented API for more advanced graphics
+- The API mimics, in many ways the MATLAB one, easing the transition from MATLAB users to python
+- Once again, no surprises, matplotlib is a very stable and mature project (expect one major release per year)
+
+Inline plots in the notebook:
+```
+*ipython notebook --pylab inline 
+```
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+```
+import numpy as np
+*import matplotlib.pyplot as plt
+
+# Compute the x and y coordinates for points on a sine curve
+x = np.arange(0, 3 * np.pi, 0.1)
+y = np.sin(x)
+
+# Plot the points using matplotlib
+*plt.plot(x, y)
+*plt.show()  # You must call plt.show() to make graphics appear.
+```
+
+```
+import numpy as np
+*import matplotlib.pyplot as plt
+
+# Compute the x and y coordinates for points on sine and cosine curves
+x = np.arange(0, 3 * np.pi, 0.1)
+y_sin = np.sin(x)
+y_cos = np.cos(x)
+
+# Plot the points using matplotlib
+*plt.plot(x, y_sin)
+*plt.plot(x, y_cos)
+plt.xlabel('x axis label')
+plt.ylabel('y axis label')
+plt.title('Sine and Cosine')
+plt.legend(['Sine', 'Cosine'])
+plt.show()
+```
+
+]]
+.column_t1[.vmiddle[
+#matplotlib
+
+matplotlib tries to make easy things easy and hard things possible. You can generate plots, histograms, power spectra, bar charts, errorcharts, scatterplots, etc, with just a few lines of code. 
+
+For simple plotting the pyplot interface provides a MATLAB-like interface, particularly when combined with IPython. For the power user, you have full control of line styles, font properties, axes properties, etc, via an object oriented interface or via a set of functions familiar to MATLAB users.
+
+With just a little bit of extra work we can easily plot a more complex chart e.g. *multiple lines* at once, and add a *title*, *legend*, and *axis labels*.
+
+]]
+
+
+---
+class: split-30 nopadding
+background-image: url(https://cloud.githubusercontent.com/assets/4231611/10990755/4986c890-8489-11e5-8691-c32f5370a3f3.jpg)
+
+.column_t2.center[.vmiddle[
+.fgtransparent[
+# <i class="icon-python fa-4x"></i>
+]
+]]
+.column_t2[.vmiddle.nopadding[
+.shadelight[.boxtitle1[
+# Notes
+#### 
+]]
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+
+#TL;DR
+- NumPy is the foundation
+- SciPy is built upon NumPy, with some overlapping functionality
+- matplotlib complements both
+
+##NumPy, SciPy, matplotlib
+- **NumPy** is the foundation of scientific and numerical computing with Python
+- **SciPy** is a collection of mathematical and scientific tools
+- **matplotlib** is a technical plotting package
+
+]]
+.column_t2[.vmiddle[
+
+###NumPy Arrays
+- Implemented in C for efficiency
+- Python indexing and slicing
+- Elements are strongly typed
+
+###Taking advantage of NumPy
+- Think in parallel!
+- Replace loops with vector operations
+
+###matplotlib
+- Primarily 2D plotting
+- Basic 3D plots available with mplot3d (import mpl_toolkits.mplot3d)
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+###Other Notes
+NumPy/SciPy/scikit-learn rely on many low-level Fortran/C library such as BLAS, ATLAS, the Intel MKL…
+- most of these libraries are shipped by your favorite OS unoptimized (well, maybe not the case for Mac)
+- you may want to re-compile these libraries or to use a packaged python distribution (anaconda, canopy)
+- libraries for performance: numba, cython, ...
+
+]]
+.column_t1[.vmiddle[
+
+]]
+
+
+---
+class: split-30 nopadding
+background-image: url(https://cloud.githubusercontent.com/assets/4231611/11257865/47de7fee-8e87-11e5-8995-170ed746cf64.jpg)
+
+.column_t2.center[.vmiddle[
+.fgtransparent[
+# <i class="icon-python fa-4x"></i>
+]
+]]
+.column_t2[.vmiddle.nopadding[
+.shadelight[.boxtitle1[
+# pandas
+#### 
+]]
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+
+.figstyle1[
+![](images/pandas.jpg)
+]
+
+]]
+.column_t2[.vmiddle[
+
+**pandas** is an open source, BSD-licensed library providing high-performance, easy-to-use data .uline[structures] and data .uline[analysis] tools for the Python programming language.
+
+#pandas
+- "R for Python"
+- Provides easy to use data structures & a ton of useful helper functions for data cleanup and transformations
+- Fast! (backed by NumPy arrays)
+- Integrates well with other libs e.g. scikit-learn
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+
+```
+*import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+s = pd.Series([1,3,5,np.nan,6,8])
+dates = pd.date_range('20130101', periods=6)
+df = pd.DataFrame(np.random.randn(6,4), index=dates, columns=list('ABCD'))
+df2 = pd.DataFrame({ 'A' : 1.,
+                     'B' : pd.Timestamp('20130102'),
+                     'C' : pd.Series(1,index=list(range(4)),dtype='float32'),
+                     'D' : np.array([3] * 4,dtype='int32'),
+                     'E' : pd.Categorical(["test","train","test","train"]),
+                     'F' : 'foo' })
+```
+
+]]
+.column_t1[.vmiddle[
+
+#pandas
+- pandas provides the `DataFrame` class, which is very similar to a `data.frame` in R
+- Built on top of NumPy arrays, and allows mixed column types
+- Copes well with missing values (unlike NumPy)
+- Intelligently matches on columns/indices (supports SQL-like joins etc.)
+- Read and write .csv, .xls, HTML tables etc.
+- Lots of useful data analysis tools built in
+
+]]
+
+---
+class: split-30 nopadding
+background-image: url(https://cloud.githubusercontent.com/assets/4231611/11257865/47de7fee-8e87-11e5-8995-170ed746cf64.jpg)
+
+.column_t2.center[.vmiddle[
+.fgtransparent[
+# <i class="icon-python fa-4x"></i>
+]
+]]
+.column_t2[.vmiddle.nopadding[
+.shadelight[.boxtitle1[
+# SymPy
+#### 
+]]
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+
+.figstyle1[
+![](images/sympy.jpg)
+]
+
+]]
+.column_t2[.vmiddle[
+#SymPy
+**SymPy** is a Python library for symbolic mathematics. It aims to become a full-featured computer algebra system (CAS) while keeping the code as simple as possible in order to be comprehensible and easily extensible. 
+
+SymPy is written entirely in Python and does not require any external libraries.
+
+```
+import sympy
+sympy.sqrt(8)
+*# 2*sqrt(2)
+
+from sympy import symbols
+x, y = symbols('x y')
+expr = x + 2*y
+expr
+*# x + 2*y
+
+expr - x
+*# 2*y
+```
+
+]]
+
+---
+class: split-30 nopadding
+background-image: url(https://cloud.githubusercontent.com/assets/4231611/11257865/47de7fee-8e87-11e5-8995-170ed746cf64.jpg)
+
+.column_t2.center[.vmiddle[
+.fgtransparent[
+# <i class="icon-python fa-4x"></i>
+]
+]]
+.column_t2[.vmiddle.nopadding[
+.shadelight[.boxtitle1[
+# scikit-learn
+#### 
+]]
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+
+.figstyle1[
+![](images/skl.jpg)
+]
+
+]]
+.column_t2[.vmiddle[
+#scikit-learn
+- **Machine Learning** algorithms implemented in Python on top of NumPy & SciPy
+- Conveniently maintains the .uline[same] interface to a wide range of algorithms
+- Includes algorithms for: Classification, Regression, Clustering, Dimensionality reduction
+- As well as .uline[lots] of useful utilities (cross-validation, preprocessing etc.)
+
+```
+*from sklearn import datasets
+iris = datasets.load_iris()
+digits = datasets.load_digits()
+
+print(digits.data)
+digits.target
+digits.images[0]
+
+*from sklearn import svm
+clf = svm.SVC(gamma=0.001, C=100.)
+clf.fit(digits.data[:-1], digits.target[:-1])  
+```
+
+]]
+
+---
+class: split-30 nopadding
+background-image: url(https://cloud.githubusercontent.com/assets/4231611/11257865/47de7fee-8e87-11e5-8995-170ed746cf64.jpg)
+
+.column_t2.center[.vmiddle[
+.fgtransparent[
+# <i class="icon-python fa-4x"></i>
+]
+]]
+.column_t2[.vmiddle.nopadding[
+.shadelight[.boxtitle1[
+# The State of the Stack
+#### 
+]]
+]]
+
+---
+background-image: url(images/jakevdp.jpg)
+
+---
+
+#Many More Tools ..
+##Performance
+Numba, Weave, Numexpr, Theano . . .
+
+##Visualization
+Bokeh, Seaborn, Plotly, Chaco, mpld3, ggplot,
+MayaVi, vincent, toyplot, HoloViews . . .
+
+##Data Structures & Computation
+Blaze, Dask, DistArray, XRay,
+Graphlab, SciDBpy, pySpark . . .
+
+##Packaging & distribution:
+pip/wheels, conda, EPD, Canopy, Anaconda ...
+
+---
+
+# References
+
+1. **Brian Granger**: Project Jupyter as a Foundation for Open Data Science
+2. **Juan Luis Cano Rodriguez**, IPython: How a notebook is changing science | Python as a real alternative to MATLAB, Mathematica and other commercial software
+3. **Olivier Hervieu**: Introduction to scientific programming in python 
+4. **CS231n**: IPython Tutorial, http://cs231n.github.io/ipython-tutorial/
+5. **J.R. Johansson**: Introduction to scientific computing with Python
+6. [Introduction to solving biological problems with Python by pycam](http://pycam.github.io/)
+7. **Jake VanderPlas**: The State of the Stack
+
+---
+class: split-30 nopadding
+background-image: url(https://cloud.githubusercontent.com/assets/4231611/11257865/47de7fee-8e87-11e5-8995-170ed746cf64.jpg)
+
+.column_t2.center[.vmiddle[
+.fgtransparent[
+# <i class="icon-python fa-4x"></i>
+]
+]]
+.column_t2[.vmiddle.nopadding[
+.shadelight[.boxtitle1[
+# END
+
+### [Eueung Mulyana](https://github.com/eueung)
+### http://eueung.github.io/python/sci
+#### Hint: Navigate with Arrow Keys | [Attribution-ShareAlike CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/)
+#### 
+]]
+]]
+
+
+
+    </textarea>
+    <script src="https://gnab.github.io/remark/downloads/remark-0.12.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create({highlightLanguage:'python', highlightStyle: 'tomorrow', highlightLines: true});
+    </script>
+  </body>
+</html>
