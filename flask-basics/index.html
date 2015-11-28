@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Flask Basics</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Open+Sans);
+
+body { font-family: 'Open Sans Condensed','Droid Serif','Open Sans', sans-serif; }
+h1, h2, h3, h4 {
+    font-family: 'Yanone Kaffeesatz';
+    font-weight: 400;
+    margin-bottom: 0;
+    margin-top: 10px;
+}
+h1 { font-size: 3.5em; }
+h2 { font-size: 3em; }
+h3 { font-size: 1.6em; }
+h4 { font-size: 1em; }
+.inverse {
+    background: #272822;
+    color: #777872;
+    text-shadow: 0 0 20px #333;
+}
+.inverse h1, .inverse h2 {
+    color: #f3f3f3;
+    line-height: 0.8em;
+}
+
+code { font-family: 'Ubuntu Mono', sans-serif !important; }
+pre code { background-color: #fff; border-top: 5px solid #ddd; border-bottom: 5px solid #ddd; margin-top: 10px;}
+h1 code { font-weight: 300; font-size: 1em !important; background-color: #eee; padding: 0px 5px; border-radius: 5px; }
+
+a {
+    color: #F92672;
+    text-decoration: none;
+}
+.task {
+    float: right;
+    font-size: 0.9em;
+    padding-top: 0.6em;
+}
+.task a {
+    color: #080;
+    text-decoration: none;
+}
+.right {
+    float: right;
+    margin-left: 1em;
+}
+.pushdown {
+    margin-top: 12em;
+}
+
+.done-true {
+  text-decoration: line-through;
+  color: grey;
+}
+
+ul.unstyled,ol.unstyled{margin-left:0;list-style:none;}
+
+.remark-visible .remark-slide-scaler {
+  overflow-y: auto;
+}
+
+.nopadding { padding:0 !important;}
+
+.red    { color: #FF4943; }
+.gray   { color: #787878; }
+.green  { color: #87A558; }
+.blue   { color: #41C8F0; }
+.yellow { color: #DBEC62; }
+.white  { color: #FFFFFF; }
+.or1 {color: #FFD740;}
+.bluelight {color: #B3E5FC;}
+.dark1 {color: #B6B6B6;}
+
+.bold { font-weight: bold; }
+
+pre {
+  background-color: transparent ; 
+  border: 0 ; 
+  border-radius: 0 ;
+  padding: 10px 0; 
+}
+.remark-code {
+  font-size: 14px;
+  line-height: 1.25;
+}
+
+.remark-code-line-highlighted {
+  font-weight: bold;
+  background-color: transparent;
+  text-shadow: 
+      0px 10px 30px rgba(255, 98, 20, .5),
+      10px 0px 30px rgba(255, 98, 20, .5),
+      -10px 0px 30px rgba(255, 98, 20, .5),
+      0px -10px 30px rgba(255, 98, 20, .5);
+}
+.reverse .remark-code-line-highlighted {
+    font-weight: normal !important;
+    color: transparent;
+    text-shadow: 0 0 5px #000;
+    font-size: 1em;
+}
+.reverse .remark-code-line { font-weight: bold; }
+
+.shade {
+    padding: 0;
+}
+
+.shade  {
+    background-color:rgba(0,0,0,0.7);
+    color: white;
+    width: 100%;
+    padding: 1em 0;
+}
+
+.shadelight  {
+    background-color:rgba(0,0,0,0.5);
+    color: white;
+    width: 100%;
+    padding: 0;
+}
+
+.fgtransparent h1 {
+  color:rgba(255,255,255,0.8) !important;
+  text-shadow: none;
+}
+
+.nosplit>div:first-of-type {width: 100%; height:100%; float:left; }
+.split-30>div:first-of-type {width: 30%; height:100%; float:left; }
+.split-30>div:nth-of-type(2) {width: 70%; height:100%; float:right;}
+.split-50>div:first-of-type {width: 50%; height:100%; float:left; }
+.split-50>div:nth-of-type(2) {width: 50%; height:100%; float:right;}
+.column_t1 {
+  background-color: #2aa9df;
+  color: white;
+}
+.column_t1 a {color: #B3E5FC;}
+.column_t1 pre code {
+  -webkit-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);  
+}
+.column_t2 {
+}
+
+.uline {text-decoration: underline;}
+
+.vmiddle {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  padding:1em;
+}
+.pushfront {
+    z-index: 2;   
+}
+.remark-slide-content .vmiddle h1 {margin-top: 0;}
+
+.boxtitle1 {
+  padding:1em;
+  text-align: left;
+  border-left: white solid 0.5em;
+  border-right: white solid 0em;
+}
+
+.figplain img {
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-top: #eee solid 20px;
+  border-bottom: #eee solid 20px;
+}
+.noborder img {border:none !important;}
+
+.figstyle1 img {
+  -webkit-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);  
+  width: 100%;
+}
+.figstyle1h img {
+  -webkit-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);  
+  max-width: 100%;
+  max-height: 600px;
+}
+.figstyle1h {}
+
+.tab1 table {
+  background: rgba(255, 255, 255, 0.12);
+  border: 4px solid #eeeeee;
+  margin: 0px auto;
+  border-collapse:collapse;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); }
+
+.tab1 table td, .tab1 table th {
+  border: 1px solid white;
+  padding: 0.25em 1em;
+  }
+
+.tab1 table th {
+  opacity: 1;
+  background-color:#ff6600;
+  vertical-align:middle;
+} 
+.fullwidth {width: 100% !important;}
+.fullheight {max-height: 100% !important;}
+
+.tab2 table {
+  background: rgba(255, 255, 255, 0.12);
+  border: 4px solid #eeeeee;
+  margin: 0px auto;
+  border-collapse:collapse;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); }
+
+.tab2 table td, .tab2 table th {
+  border: 1px solid #eee;
+  padding: 0.25em 1em;
+  }
+
+.tab2 table th {
+  opacity: 1;
+  background-color:#ff6600;
+  vertical-align:middle;
+}  
+
+    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://eueung.github.io/EL5244/mfizz22/font-mfizz.css">
+  </head>
+  <body>
+    <textarea id="source">
+
+
+class: split-30 nopadding
+background-image: url(https://cloud.githubusercontent.com/assets/4231611/10990721/eaf43542-8488-11e5-9138-7146be2b1cde.jpg)
+
+.column_t2.center[.vmiddle[
+.fgtransparent[
+# <i class="icon-python fa-4x"></i>
+]
+]]
+.column_t2[.vmiddle.nopadding[
+.shadelight[.boxtitle1[
+# Flask Basics
+
+### [Eueung Mulyana](https://github.com/eueung)
+### http://eueung.github.io/python/flask-basics
+#### Python CodeLabs | [Attribution-ShareAlike CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/)
+#### 
+]]
+]]
+
+---
+class: split-30 nopadding
+background-image: url(https://cloud.githubusercontent.com/assets/4231611/10990721/eaf43542-8488-11e5-9138-7146be2b1cde.jpg)
+
+.column_t2.center[.vmiddle[
+.fgtransparent[
+# <i class="icon-python fa-4x"></i>
+]
+]]
+.column_t2[.vmiddle.nopadding[
+.shadelight[.boxtitle1[
+# Flask Basics
+#### 
+]]
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+
+```
+*from flask import Flask, render_template
+
+*app = Flask("app")
+app.debug = True
+
+def top_articles():
+    return [
+        {"title": "Google", "link": "http://google.com", "date": "just now"},
+        {"title": "Yahoo",  "link": "http://yahoo.com", "date": "1 minute ago"}
+   ]
+
+*@app.route('/')
+def index():
+    articles = top_articles()
+    return render_template("rows.jinja2.html",
+                           rows=articles)
+
+PORT=4001
+*app.run(host="0.0.0.0", port=PORT, use_reloader=False)
+```
+
+```html
+<ul>
+{% for row in rows %}
+     <li>{{ row }}</li>
+{% endfor %}
+</ul>
+```
+.center[templates/rows.jinja2.html]
+
+]]
+.column_t1[.vmiddle[
+# Example #1
+####&nbsp;
+.figstyle1[
+![](images/set01ex01.jpg)
+]
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+
+# Example #2
+####&nbsp;
+.figstyle1[
+![](images/set01ex02.jpg)
+]
+
+**Notes**:
+- If you .uline[enable] debug support the server will reload itself on code changes, and it will also provide you with a helpful debugger if things go wrong
+- The .bluelight[route()] decorator
+- Default Port .bluelight[5000]
+
+]]
+.column_t2[.vmiddle[
+
+```
+from flask import Flask
+app = Flask(__name__)
+#---------------------------------------------
+*@app.route('/')
+def index():
+    return 'Index Page'
+
+*@app.route('/hello')
+def hello():
+    return 'Hello World'
+#---------------------------------------------
+*if __name__ == '__main__':
+    #app.run()
+*   app.run(host='0.0.0.0')
+    #app.debug = True
+    #app.run(debug=True)
+```
+.center[hello.py]
+
+.figstyle1[
+![](images/set01ex02a.jpg)
+]
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+# Example #3
+
+```
+*@app.route('/user/<username>')
+def show_user_profile(username):
+    # show the user profile for that user
+    return 'User %s' % username
+
+*@app.route('/post/<int:post_id>')
+def show_post(post_id):
+    # show the post with the given id, the id is an integer
+    return 'Post %d' % post_id
+
+*@app.route('/projects/')
+def projects():
+    return 'The project page'
+
+*@app.route('/about')
+def about():
+    return 'The about page'
+```
+**Notes**:
+- Variable rules
+- Unique URLs / redirection behaviours: trailing / vs. none
+
+]]
+.column_t1[.vmiddle[
+
+```
+Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+*127.0.0.1 - - [22/Nov/2015 17:22:01] "GET /user HTTP/1.1" 404 -
+127.0.0.1 - - [22/Nov/2015 17:22:24] "GET /user/otong HTTP/1.1" 200 -
+127.0.0.1 - - [22/Nov/2015 17:26:11] "GET /post HTTP/1.1" 404 -
+127.0.0.1 - - [22/Nov/2015 17:26:23] "GET /post/2 HTTP/1.1" 200 -
+127.0.0.1 - - [22/Nov/2015 17:26:59] "GET /post/otong HTTP/1.1" 404 -
+*127.0.0.1 - - [22/Nov/2015 17:27:52] "GET /projects HTTP/1.1" 301 -
+*127.0.0.1 - - [22/Nov/2015 17:27:52] "GET /projects/ HTTP/1.1" 200 -
+127.0.0.1 - - [22/Nov/2015 17:28:30] "GET /projects/ HTTP/1.1" 200 -
+127.0.0.1 - - [22/Nov/2015 17:29:01] "GET /about HTTP/1.1" 200 -
+*127.0.0.1 - - [22/Nov/2015 17:29:05] "GET /about/ HTTP/1.1" 404 -
+
+```
+
+.figstyle1[
+![](images/set01ex03.jpg)
+]
+
+
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+#Example #4
+###URL Building
+...
+###Static Files
+
+```
+url_for('static', filename='style.css')
+*# static/style.css
+```
+
+]]
+.column_t2[.vmiddle[
+
+```
+*from flask import Flask, url_for
+app = Flask(__name__)
+
+@app.route('/')
+def index(): pass
+
+@app.route('/login')
+def login(): pass
+
+@app.route('/user/<username>')
+def profile(username): pass
+
+*with app.test_request_context():
+  print url_for('index')
+  print url_for('login')
+* print url_for('login', next='/')
+* print url_for('profile', username='John Doe')
+```
+
+```
+$ python app.py
+
+/
+/login
+*/login?next=%2F
+*/user/John%20Doe
+
+```
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+
+```
+from flask import Flask, request
+app = Flask(__name__)
+#---------------------------------------------
+def do_the_login():
+    return 'Do Login'
+
+def show_the_login_form():
+    return 'Show Form'
+
+#---------------------------------------------
+*@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+*       return do_the_login()
+    else:
+        return show_the_login_form()
+#---------------------------------------------
+if __name__ == '__main__':
+    app.run(host='0.0.0.0',debug=True)
+```
+
+```
+ * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+ * Restarting with stat
+127.0.0.1 - - [22/Nov/2015 18:47:02] "GET /login HTTP/1.1" 200 -
+127.0.0.1 - - [22/Nov/2015 18:49:45] "POST /login HTTP/1.1" 200 -
+```
+
+]]
+.column_t1[.vmiddle[
+##Example #5
+###HTTP Methods
+####&nbsp;
+.figstyle1[
+![](images/set01ex05.jpg)
+]
+
+.figstyle1[
+![](images/set01ex05a.jpg)
+]
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+#Example #6
+
+.figstyle1[
+![](images/set01ex06.jpg)
+]
+
+
+```
+127.0.0.1 - - [23/Nov/2015 02:47:00] "GET /hello HTTP/1.1" 301 -
+127.0.0.1 - - [23/Nov/2015 02:47:00] "GET /hello/ HTTP/1.1" 200 -
+*127.0.0.1 - - [23/Nov/2015 02:49:03] "GET /hello/Otong HTTP/1.1" 200 -
+```
+
+.figstyle1[
+![](images/set01ex06a.jpg)
+]
+
+]]
+.column_t2[.vmiddle[
+
+```
+from flask import Flask, render_template
+app = Flask(__name__)
+#---------------------------------------------
+@app.route('/hello/')
+@app.route('/hello/<name>')
+def hello(name=None):
+*   return render_template('hello.html', name=name)
+#---------------------------------------------
+if __name__ == '__main__':
+    app.run(host='0.0.0.0',debug=True)
+```
+
+```html
+<!doctype html>
+<title>Hello from Flask</title>
+*{% if name %}
+  <h1>Hello {{ name }}!</h1>
+*{% else %}
+  <h1>Hello World!</h1>
+*{% endif %}
+```
+.center[hello.html]
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+
+```
+*from flask import Flask, Markup
+#---------------------------------------------
+
+print Markup('<strong>Hello %s!</strong>') % '<blink>hacker</blink>'
+print "---"
+print Markup.escape('<blink>hacker</blink>')
+print "---"
+print Markup('<em>Marked up</em> &raquo; HTML').striptags()
+```
+
+.figstyle1[
+![](images/set01ex07.jpg)
+]
+
+]]
+.column_t1[.vmiddle[
+#Example #7
+###Markup
+
+]]
+
+---
+
+#References
+##Flask
+- [Flask (A Python Microframework)](http://flask.pocoo.org/)
+- [Flask Documentation](http://flask.pocoo.org/docs/)
+- [Flask @github](https://github.com/mitsuhiko/flask)
+
+---
+class: split-30 nopadding
+background-image: url(https://cloud.githubusercontent.com/assets/4231611/10990721/eaf43542-8488-11e5-9138-7146be2b1cde.jpg)
+
+.column_t2.center[.vmiddle[
+.fgtransparent[
+# <i class="icon-python fa-4x"></i>
+]
+]]
+.column_t2[.vmiddle.nopadding[
+.shadelight[.boxtitle1[
+# Flaskr Microblog 
+#### 
+]]
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+#Flaskr
+###Files & Folders
+
+```
+flaskr.py
+*initdb_flaskr.py
+schema.sql
+
+templates/layout.html
+templates/login.html
+templates/show_entries.html
+*static/style.css
+```
+
+### schema.sql
+
+```sql
+drop table if exists entries;
+create table entries (
+  id integer primary key autoincrement,
+  title text not null,
+  'text' text not null
+);
+```
+
+]]
+.column_t2[.vmiddle[
+###initdb_flaskr.py
+
+```
+import sqlite3
+from flask import Flask
+*from contextlib import closing
+#---------------------------------------------
+DATABASE = 'flaskr.db'
+#---------------------------------------------
+app = Flask(__name__)
+app.config.from_object(__name__)
+#---------------------------------------------
+def connect_db():
+    return sqlite3.connect(app.config['DATABASE'])
+#---------------------------------------------
+def init_db():
+*   with closing(connect_db()) as db:
+        with app.open_resource('schema.sql', mode='r') as f:
+            db.cursor().executescript(f.read())
+        db.commit()    
+#---------------------------------------------
+init_db()
+```
+
+```bash
+*sqlite3 flaskr.db < schema.sql
+```
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+###layout.html
+
+```html
+<!doctype html>
+<title>Flaskr</title>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+<div class="page">
+  <h1>Flaskr</h1>
+  <div class="metanav">
+  {% if not session.logged_in %}
+    <a href="{{ url_for('login') }}">log in</a>
+  {% else %}
+    <a href="{{ url_for('logout') }}">log out</a>
+  {% endif %}
+  </div>
+  {% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+* {% block body %}{% endblock %}
+</div>
+```
+
+]]
+.column_t1[.vmiddle[
+###flaskr.py
+####&nbsp;
+
+.figstyle1[
+![](images/flaskr-main.jpg)
+]
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+
+```
+import os
+from sqlite3 import dbapi2 as sqlite3
+from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
+#---------------------------------------------
+app = Flask(__name__)
+#---------------------------------------------
+# Load default config and override config from an environment variable
+app.config.update(dict(
+    DATABASE=os.path.join(app.root_path, 'flaskr.db'),
+    DEBUG=True,
+    SECRET_KEY='development key',
+    USERNAME='admin',
+    PASSWORD='default'
+))
+app.config.from_envvar('FLASKR_SETTINGS', silent=True)
+#---------------------------------------------
+*def connect_db():
+    rv = sqlite3.connect(app.config['DATABASE'])
+    rv.row_factory = sqlite3.Row
+    return rv
+#---------------------------------------------
+*def get_db():
+    if not hasattr(g, 'sqlite_db'):
+        g.sqlite_db = connect_db()
+    return g.sqlite_db
+#---------------------------------------------
+*@app.teardown_appcontext
+def close_db(error):
+    if hasattr(g, 'sqlite_db'):
+        g.sqlite_db.close()    
+```
+]]
+.column_t1[.vmiddle[
+###flaskr.py
+####&nbsp;
+
+
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+###flaskr.py
+
+```
+@app.route('/')
+def show_entries():
+    db = get_db()
+    cur = db.execute('select title, text from entries order by id desc')
+    entries = cur.fetchall()
+*   return render_template('show_entries.html', entries=entries)
+#---------------------------------------------
+@app.route('/add', methods=['POST'])
+def add_entry():
+    if not session.get('logged_in'):
+        abort(401)
+    db = get_db()
+    db.execute('insert into entries (title, text) values (?, ?)',
+               [request.form['title'], request.form['text']])
+    db.commit()
+    flash('New entry was successfully posted')
+*   return redirect(url_for('show_entries'))
+```
+
+]]
+.column_t2[.vmiddle[
+### show_entries.html
+
+```html
+{% extends "layout.html" %}
+*{% block body %}
+* {% if session.logged_in %}
+    <form action="{{ url_for('add_entry') }}" method="post" class="add-entry">
+      <dl>
+        <dt>Title:
+        <dd><input type="text" size="30" name="title">
+        <dt>Text:
+        <dd><tagtextarea name="text" rows="5" cols="40"></tagtextarea>
+        <dd><input type="submit" value="Share">
+      </dl>
+    </form>
+* {% endif %}
+  <ul class="entries">
+* {% for entry in entries %}
+    <li><h2>{{ entry.title }}</h2>{{ entry.text|safe }}
+* {% else %}
+    <li><em>Unbelievable.  No entries here so far</em>
+* {% endfor %}
+  </ul>
+*{% endblock %}
+```
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+###flaskr.py
+
+```
+@app.route('/login', methods=['GET', 'POST'])
+*def login():
+    error = None
+    if request.method == 'POST':
+        if request.form['username'] != app.config['USERNAME']:
+            error = 'Invalid username'
+        elif request.form['password'] != app.config['PASSWORD']:
+            error = 'Invalid password'
+        else:
+            session['logged_in'] = True
+            flash('You were logged in')
+            return redirect(url_for('show_entries'))
+*   return render_template('login.html', error=error)
+#---------------------------------------------
+*@app.route('/logout')
+def logout():
+    session.pop('logged_in', None)
+    flash('You were logged out')
+*   return redirect(url_for('show_entries'))
+#---------------------------------------------
+if __name__ == '__main__':
+    app.run()    
+```
+
+]]
+.column_t1[.vmiddle[
+###login.html
+
+```html
+{% extends "layout.html" %}
+{% block body %}
+  <h2>Login</h2>
+  {% if error %}<p class="error"><strong>Error:</strong> {{ error }}{% endif %}
+  <form action="{{ url_for('login') }}" method="post">
+    <dl>
+      <dt>Username:
+      <dd><input type="text" name="username">
+      <dt>Password:
+      <dd><input type="password" name="password">
+      <dd><input type="submit" value="Login">
+    </dl>
+  </form>
+{% endblock %}
+```
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+###test_flaskr.py
+
+- `py.test test_flaskr.py`
+- `py.test` will run all files in the current directory and its subdirectories of the form `test_*.py` or `*_test.py`
+
+]]
+.column_t2[.vmiddle[
+
+```
+*import pytest
+
+import os
+import flaskr
+import tempfile
+#---------------------------------------------
+*@pytest.fixture
+*def client(request):
+    db_fd, flaskr.app.config['DATABASE'] = tempfile.mkstemp()
+    flaskr.app.config['TESTING'] = True
+*   client = flaskr.app.test_client()
+    with flaskr.app.app_context():
+*       flaskr.init_db()
+
+    def teardown():
+        os.close(db_fd)
+        os.unlink(flaskr.app.config['DATABASE'])
+    request.addfinalizer(teardown)
+
+    return client
+#---------------------------------------------
+def login(client, username, password):
+    return client.post('/login', data=dict(
+        username=username,
+        password=password
+    ), follow_redirects=True)
+#---------------------------------------------
+def logout(client):
+    return client.get('/logout', follow_redirects=True)
+```
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+
+```
+*def test_empty_db(client):
+    """Start with a blank database."""
+    rv = client.get('/')
+    assert b'No entries here so far' in rv.data
+#---------------------------------------------
+*def test_login_logout(client):
+    """Make sure login and logout works"""
+*   rv = login(client, flaskr.app.config['USERNAME'], flaskr.app.config['PASSWORD'])
+    assert b'You were logged in' in rv.data
+*   rv = logout(client)
+    assert b'You were logged out' in rv.data
+*   rv = login(client, flaskr.app.config['USERNAME'] + 'x', flaskr.app.config['PASSWORD'])
+    assert b'Invalid username' in rv.data
+*   rv = login(client, flaskr.app.config['USERNAME'], flaskr.app.config['PASSWORD'] + 'x')
+    assert b'Invalid password' in rv.data
+#---------------------------------------------
+*def test_messages(client):
+    """Test that messages work"""
+*   login(client, flaskr.app.config['USERNAME'], flaskr.app.config['PASSWORD'])
+    rv = client.post('/add', data=dict(
+        title='<Hello>',
+        text='<strong>HTML</strong> allowed here'
+    ), follow_redirects=True)
+    assert b'No entries here so far' not in rv.data
+    assert b'&lt;Hello&gt;' in rv.data
+    assert b'<strong>HTML</strong> allowed here' in rv.data
+```
+
+]]
+.column_t1[.vmiddle[
+###test_flaskr.py
+
+]]
+
+---
+
+#References
+
+- [Tutorial - Flask Documentation (0.10)](http://flask.pocoo.org/docs/0.10/tutorial/)
+- [Flaskr @github](https://github.com/mitsuhiko/flask/tree/master/examples/flaskr)
+- [Testing Flask Applications](http://flask.pocoo.org/docs/latest/testing)
+- [pytest - Getting Started](http://pytest.org/latest/getting-started.html)
+
+---
+class: split-30 nopadding
+background-image: url(https://cloud.githubusercontent.com/assets/4231611/10990721/eaf43542-8488-11e5-9138-7146be2b1cde.jpg)
+
+.column_t2.center[.vmiddle[
+.fgtransparent[
+# <i class="icon-python fa-4x"></i>
+]
+]]
+.column_t2[.vmiddle.nopadding[
+.shadelight[.boxtitle1[
+# END
+
+### [Eueung Mulyana](https://github.com/eueung)
+### http://eueung.github.io/python/flask-basics
+#### Python CodeLabs | [Attribution-ShareAlike CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/)
+#### 
+]]
+]]
+
+
+
+    </textarea>
+    <script src="https://gnab.github.io/remark/downloads/remark-0.12.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create({highlightLanguage:'python', highlightStyle: 'tomorrow', highlightLines: true});
+    </script>
+  </body>
+</html>
