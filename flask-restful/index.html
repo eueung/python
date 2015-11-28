@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Flask RESTful - HTTPAuth</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Open+Sans);
+
+body { font-family: 'Open Sans Condensed','Droid Serif','Open Sans', sans-serif; }
+h1, h2, h3, h4 {
+    font-family: 'Yanone Kaffeesatz';
+    font-weight: 400;
+    margin-bottom: 0;
+    margin-top: 10px;
+}
+h1 { font-size: 3.5em; }
+h2 { font-size: 3em; }
+h3 { font-size: 1.6em; }
+h4 { font-size: 1em; }
+.inverse {
+    background: #272822;
+    color: #777872;
+    text-shadow: 0 0 20px #333;
+}
+.inverse h1, .inverse h2 {
+    color: #f3f3f3;
+    line-height: 0.8em;
+}
+
+code { font-family: 'Ubuntu Mono', sans-serif !important; }
+pre code { background-color: #fff; border-top: 5px solid #ddd; border-bottom: 5px solid #ddd; margin-top: 10px;}
+h1 code { font-weight: 300; font-size: 1em !important; background-color: #eee; padding: 0px 5px; border-radius: 5px; }
+
+a {
+    color: #F92672;
+    text-decoration: none;
+}
+.task {
+    float: right;
+    font-size: 0.9em;
+    padding-top: 0.6em;
+}
+.task a {
+    color: #080;
+    text-decoration: none;
+}
+.right {
+    float: right;
+    margin-left: 1em;
+}
+.pushdown {
+    margin-top: 12em;
+}
+
+.done-true {
+  text-decoration: line-through;
+  color: grey;
+}
+
+ul.unstyled,ol.unstyled{margin-left:0;list-style:none;}
+
+.remark-visible .remark-slide-scaler {
+  overflow-y: auto;
+}
+
+.nopadding { padding:0 !important;}
+
+.red    { color: #FF4943; }
+.gray   { color: #787878; }
+.green  { color: #87A558; }
+.blue   { color: #41C8F0; }
+.yellow { color: #DBEC62; }
+.white  { color: #FFFFFF; }
+.or1 {color: #FFD740;}
+.bluelight {color: #B3E5FC;}
+.dark1 {color: #B6B6B6;}
+
+.bold { font-weight: bold; }
+
+pre {
+  background-color: transparent ; 
+  border: 0 ; 
+  border-radius: 0 ;
+  padding: 10px 0; 
+}
+.remark-code {
+  font-size: 14px;
+  line-height: 1.25;
+}
+
+.remark-code-line-highlighted {
+  font-weight: bold;
+  background-color: transparent;
+  text-shadow: 
+      0px 10px 30px rgba(255, 98, 20, .5),
+      10px 0px 30px rgba(255, 98, 20, .5),
+      -10px 0px 30px rgba(255, 98, 20, .5),
+      0px -10px 30px rgba(255, 98, 20, .5);
+}
+.reverse .remark-code-line-highlighted {
+    font-weight: normal !important;
+    color: transparent;
+    text-shadow: 0 0 5px #000;
+    font-size: 1em;
+}
+.reverse .remark-code-line { font-weight: bold; }
+
+.shade {
+    padding: 0;
+}
+
+.shade  {
+    background-color:rgba(0,0,0,0.7);
+    color: white;
+    width: 100%;
+    padding: 1em 0;
+}
+
+.shadelight  {
+    background-color:rgba(0,0,0,0.5);
+    color: white;
+    width: 100%;
+    padding: 0;
+}
+
+.fgtransparent h1 {
+  color:rgba(255,255,255,0.8) !important;
+  text-shadow: none;
+}
+
+.nosplit>div:first-of-type {width: 100%; height:100%; float:left; }
+.split-30>div:first-of-type {width: 30%; height:100%; float:left; }
+.split-30>div:nth-of-type(2) {width: 70%; height:100%; float:right;}
+.split-50>div:first-of-type {width: 50%; height:100%; float:left; }
+.split-50>div:nth-of-type(2) {width: 50%; height:100%; float:right;}
+.column_t1 {
+  background-color: #2aa9df;
+  color: white;
+}
+.column_t1 a {color: #B3E5FC;}
+.column_t1 pre code {
+  -webkit-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);  
+}
+.column_t2 {
+}
+
+.uline {text-decoration: underline;}
+
+.vmiddle {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  padding:1em;
+}
+.pushfront {
+    z-index: 2;   
+}
+.remark-slide-content .vmiddle h1 {margin-top: 0;}
+
+.boxtitle1 {
+  padding:1em;
+  text-align: left;
+  border-left: white solid 0.5em;
+  border-right: white solid 0em;
+}
+
+.figplain img {
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-top: #eee solid 20px;
+  border-bottom: #eee solid 20px;
+}
+.noborder img {border:none !important;}
+
+.figstyle1 img {
+  -webkit-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);  
+  width: 100%;
+}
+.figstyle1h img {
+  -webkit-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);  
+  max-width: 100%;
+  max-height: 600px;
+}
+.figstyle1h {}
+
+.tab1 table {
+  background: rgba(255, 255, 255, 0.12);
+  border: 4px solid #eeeeee;
+  margin: 0px auto;
+  border-collapse:collapse;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); }
+
+.tab1 table td, .tab1 table th {
+  border: 1px solid white;
+  padding: 0.25em 1em;
+  }
+
+.tab1 table th {
+  opacity: 1;
+  background-color:#ff6600;
+  vertical-align:middle;
+} 
+.fullwidth {width: 100% !important;}
+.fullheight {max-height: 100% !important;}
+
+.tab2 table {
+  background: rgba(255, 255, 255, 0.12);
+  border: 4px solid #eeeeee;
+  margin: 0px auto;
+  border-collapse:collapse;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); }
+
+.tab2 table td, .tab2 table th {
+  border: 1px solid #eee;
+  padding: 0.25em 1em;
+  }
+
+.tab2 table th {
+  opacity: 1;
+  background-color:#ff6600;
+  vertical-align:middle;
+}  
+
+    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://eueung.github.io/EL5244/mfizz22/font-mfizz.css">
+  </head>
+  <body>
+    <textarea id="source">
+
+
+class: split-30 nopadding
+background-image: url(https://cloud.githubusercontent.com/assets/4231611/11257839/21b8b24e-8e87-11e5-9099-25f77383f620.jpg)
+
+.column_t2.center[.vmiddle[
+.fgtransparent[
+# <i class="icon-python fa-4x"></i>
+]
+]]
+.column_t2[.vmiddle.nopadding[
+.shadelight[.boxtitle1[
+# Flask-RESTful
+# Flask-HTTPAuth
+
+### [Eueung Mulyana](https://github.com/eueung)
+### http://eueung.github.io/python/flask-restful
+#### Python CodeLabs | [Attribution-ShareAlike CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/)
+#### 
+]]
+]]
+
+---
+class: split-30 nopadding
+background-image: url(https://cloud.githubusercontent.com/assets/4231611/11257839/21b8b24e-8e87-11e5-9099-25f77383f620.jpg)
+
+.column_t2.center[.vmiddle[
+.fgtransparent[
+# <i class="icon-python fa-4x"></i>
+]
+]]
+.column_t2[.vmiddle.nopadding[
+.shadelight[.boxtitle1[
+# Flask-RESTful
+#### 
+]]
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+#Example #1
+
+.figstyle1[
+![](images/restful-ex01.jpg)
+]
+
+]]
+.column_t2[.vmiddle[
+
+```
+from flask import Flask
+*from flask.ext import restful
+
+app = Flask(__name__)
+*api = restful.Api(app)
+#----------------------------------
+*class HelloWorld(restful.Resource):
+*   def get(self):
+        return {'hello': 'world'}
+#----------------------------------
+*api.add_resource(HelloWorld, '/')
+#----------------------------------
+if __name__ == '__main__':
+    app.run(debug=True)
+```
+
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+
+```
+from flask import Flask, request
+*from flask.ext.restful import Resource, Api
+
+app = Flask(__name__)
+api = Api(app)
+
+todos = {}
+#----------------------------------
+*class TodoSimple(Resource):
+    def get(self, todo_id):
+        return {todo_id: todos[todo_id]}
+
+    def put(self, todo_id):
+        todos[todo_id] = request.form['data']
+        return {todo_id: todos[todo_id]}
+#----------------------------------
+*api.add_resource(TodoSimple, '/<string:todo_id>')
+#----------------------------------
+if __name__ == '__main__':
+    app.run(debug=True)
+```
+
+```
+127.0.0.1 - - [23/Nov/2015 04:41:41] "PUT /todo1 HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2015 04:47:57] "GET /todo1 HTTP/1.1" 200 -
+```
+
+]]
+.column_t1[.vmiddle[
+#Example #2
+
+```bash
+*$ curl http://localhost:5000/todo1 -d "data=Remember the milk" -X PUT
+{"todo1": "Remember the milk"}
+
+*$ curl http://localhost:5000/todo1
+{"todo1": "Remember the milk"}
+```
+
+.figstyle1[
+![](images/restful-ex02.jpg)
+]
+
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+
+]]
+.column_t2[.vmiddle[
+##Notes
+###Using .blue[requests]
+
+```
+from requests import put, get
+
+*put('http://localhost:5000/todo1', data={'data': 'Remember the milk'}).json()
+# {u'todo1': u'Remember the milk'}
+
+*get('http://localhost:5000/todo1').json()
+# {u'todo1': u'Remember the milk'}
+```
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+
+```
+from flask import Flask
+*from flask.ext.restful import reqparse, abort, Api, Resource
+
+app = Flask(__name__)
+api = Api(app)
+
+TODOS = {
+    'todo1': {'task': 'build an API'},
+    'todo2': {'task': '?????'},
+    'todo3': {'task': 'profit!'},
+}
+#----------------------------------
+*def abort_if_todo_doesnt_exist(todo_id):
+    if todo_id not in TODOS:
+        abort(404, message="Todo {} doesn't exist".format(todo_id))
+
+parser = reqparse.RequestParser()
+parser.add_argument('task', type=str)
+#----------------------------------
+*class TodoList(Resource):
+    def get(self):
+        return TODOS
+
+    def post(self):
+        args = parser.parse_args()
+        todo_id = int(max(TODOS.keys()).lstrip('todo')) + 1
+        todo_id = 'todo%i' % todo_id
+        TODOS[todo_id] = {'task': args['task']}
+        return TODOS[todo_id], 201
+```
+
+]]
+.column_t1[.vmiddle[
+##Example #3
+
+```
+*# single item; get ,update and delete
+class Todo(Resource):
+    def get(self, todo_id):
+        abort_if_todo_doesnt_exist(todo_id)
+        return TODOS[todo_id]
+
+    def delete(self, todo_id):
+        abort_if_todo_doesnt_exist(todo_id)
+        del TODOS[todo_id]
+        return '', 204
+
+    def put(self, todo_id):
+        args = parser.parse_args()
+        task = {'task': args['task']}
+        TODOS[todo_id] = task
+        return task, 201
+#----------------------------------
+*api.add_resource(TodoList, '/todos')
+*api.add_resource(Todo, '/todos/<todo_id>')
+#----------------------------------
+if __name__ == '__main__':
+    app.run(debug=True)
+```
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+
+.figstyle1[
+![](images/restful-ex03.jpg)
+]
+
+.figstyle1[
+![](images/restful-ex03a.jpg)
+]
+
+]]
+.column_t2[.vmiddle[
+
+```
+127.0.0.1 - - [23/Nov/2015 05:15:54] "GET /todos HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2015 05:17:14] "GET /todos/todo3 HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2015 05:17:36] "DELETE /todos/todo2 HTTP/1.1" 204 -
+*127.0.0.1 - - [23/Nov/2015 05:17:59] "GET /todos/todo2 HTTP/1.1" 404 -
+127.0.0.1 - - [23/Nov/2015 07:38:07] "POST /todos HTTP/1.1" 201 -
+127.0.0.1 - - [23/Nov/2015 07:38:56] "GET /todos/todo4 HTTP/1.1" 200 -
+*127.0.0.1 - - [23/Nov/2015 07:39:41] "PUT /todos/todo4 HTTP/1.1" 201 -
+```
+
+```bash
+$ curl http://localhost:5000/todos
+$ curl http://localhost:5000/todos/todo3
+
+*# verbose
+$ curl http://localhost:5000/todos/todo2 -X DELETE -v
+$ curl http://localhost:5000/todos -d "task=something new" -X POST -v
+$ curl http://localhost:5000/todos/todo3 -d "task=something different" -X PUT -v
+```
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+
+```
+*from simplexml import dumps
+from flask import make_response, Flask
+from flask_restful import Api, Resource
+#------------------------------------------
+*def output_xml(data, code, headers=None):
+    resp = make_response(dumps({'response' :data}), code)
+    resp.headers.extend(headers or {})
+    return resp
+#------------------------------------------
+app = Flask(__name__)
+api = Api(app, default_mediatype='application/xml')
+*api.representations['application/xml'] = output_xml
+#------------------------------------------
+class Hello(Resource):
+    def get(self, entry):
+        return {'hello': entry}
+#------------------------------------------
+api.add_resource(Hello, '/<string:entry>')
+#------------------------------------------
+if __name__ == '__main__':
+    app.run(debug=True)
+```
+
+]]
+.column_t1[.vmiddle[
+#Example #4
+
+```
+from requests import get
+
+get('http://localhost:5000/me').content # default_mediatype
+*# Chrome ok, Postman default json
+
+get('http://localhost:5000/me', headers={"accept":"application/json"}).content
+get('http://localhost:5000/me', headers={"accept":"application/xml"}).content
+```
+
+.figstyle1[
+![](images/restful-ex04.jpg)
+]
+
+]]
+
+---
+
+#References
+##Flask-RESTful
+- [Flask-RESTful Documentation](http://flask-restful.readthedocs.org/)
+- [Flask-RESTful @github](https://github.com/flask-restful/flask-restful)
+
+---
+class: split-30 nopadding
+background-image: url(https://cloud.githubusercontent.com/assets/4231611/11257839/21b8b24e-8e87-11e5-9099-25f77383f620.jpg)
+
+.column_t2.center[.vmiddle[
+.fgtransparent[
+# <i class="icon-python fa-4x"></i>
+]
+]]
+.column_t2[.vmiddle.nopadding[
+.shadelight[.boxtitle1[
+# Flask-HTTPAuth
+#### 
+]]
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+
+```
+from flask import Flask
+*from flask_httpauth import HTTPBasicAuth
+
+app = Flask(__name__)
+*auth = HTTPBasicAuth()
+
+users = {
+    "john": "hello",
+    "susan": "bye"
+}
+#----------------------------------
+*@auth.get_password
+def get_pw(username):
+    if username in users:
+        return users.get(username)
+    return None
+#----------------------------------
+@app.route('/')
+*@auth.login_required
+def index():
+    return "Hello, %s!" % auth.username()
+#----------------------------------
+if __name__ == '__main__':
+    app.run(debug=True)
+
+```
+
+]]
+.column_t1[.vmiddle[
+# Example #1
+
+```
+127.0.0.1 - - [23/Nov/2015 18:24:07] "GET / HTTP/1.1" 401 -
+127.0.0.1 - - [23/Nov/2015 18:24:32] "POST / HTTP/1.1" 405 -
+127.0.0.1 - - [23/Nov/2015 18:26:37] "GET / HTTP/1.1" 401 -
+*127.0.0.1 - - [23/Nov/2015 18:27:30] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2015 18:27:42] "GET / HTTP/1.1" 401 -
+*127.0.0.1 - - [23/Nov/2015 18:27:49] "GET / HTTP/1.1" 200 -
+```
+
+.figstyle1[
+![](images/httpauth-ex01.jpg)
+]
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+# Example #2
+
+
+```bash
+# http://john:hello@localhost:5000
+127.0.0.1 - - [24/Nov/2015 15:47:55] "GET / HTTP/1.1" 401 -
+127.0.0.1 - - [24/Nov/2015 15:47:55] "GET / HTTP/1.1" 200 -
+*#Notes
+# Postman failed!
+# Todos: HTTPie, requests
+```
+
+.figstyle1[
+![](images/httpauth-ex02.jpg)
+]
+
+]]
+.column_t2[.vmiddle[
+
+```
+from flask import Flask
+*from flask_httpauth import HTTPDigestAuth
+
+app = Flask(__name__)
+*app.config['SECRET_KEY'] = 'secret key here'
+*auth = HTTPDigestAuth()
+#----------------------------------
+users = {
+    "john": "hello",
+    "susan": "bye"
+}
+#----------------------------------
+@auth.get_password
+def get_pw(username):
+    if username in users:
+        return users.get(username)
+    return None
+#----------------------------------
+@app.route('/')
+@auth.login_required
+def index():
+    return "Hello, %s!" % auth.username()
+#----------------------------------
+if __name__ == '__main__':
+    app.run()
+```
+
+]]
+
+---
+
+#References
+##Flask-HTTPAuth
+- [Flask-HTTPAuth Documentation](https://flask-httpauth.readthedocs.org/en/latest/)
+- [Flask-HTTPAuth @github](https://github.com/miguelgrinberg/Flask-HTTPAuth)
+
+---
+class: split-30 nopadding
+background-image: url(https://cloud.githubusercontent.com/assets/4231611/11257839/21b8b24e-8e87-11e5-9099-25f77383f620.jpg)
+
+.column_t2.center[.vmiddle[
+.fgtransparent[
+# <i class="icon-python fa-4x"></i>
+]
+]]
+.column_t2[.vmiddle.nopadding[
+.shadelight[.boxtitle1[
+# Tuts by [@miguelgrinberg](https://github.com/miguelgrinberg)
+#### 
+]]
+]]
+
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+
+```
+from flask import Flask, jsonify, abort, make_response
+*from flask.ext.restful import Api, Resource, reqparse, fields, marshal
+from flask.ext.httpauth import HTTPBasicAuth
+
+# app = Flask(__name__, static_url_path="") -> 404
+*app = Flask(__name__)
+api = Api(app)
+auth = HTTPBasicAuth()
+#--------------------------------------------------
+*@auth.get_password
+def get_password(username):
+    if username == 'miguel':
+        return 'python'
+    return None
+
+*@auth.error_handler
+def unauthorized():
+    # return 403 instead of 401 to prevent browsers from displaying the default
+    # auth dialog
+    return make_response(jsonify({'message': 'Unauthorized access'}), 403)
+*#--------------------------------------------------
+*#--------------------------------------------------
+api.add_resource(TaskListAPI, '/todo/api/v1.0/tasks', endpoint='tasks')
+*api.add_resource(TaskAPI, '/todo/api/v1.0/tasks/<int:id>', endpoint='task')
+#--------------------------------------------------
+if __name__ == '__main__':
+    app.run(debug=True)
+```
+
+]]
+.column_t1[.vmiddle[
+#Example #1
+### Part 1,2 
+
+```
+tasks = [
+    {
+*       'id': 1,
+        'title': u'Buy groceries',
+        'description': u'Milk, Cheese, Pizza, Fruit, Tylenol',
+        'done': False
+    },
+    {
+*       'id': 2,
+        'title': u'Learn Python',
+        'description': u'Need to find a good Python tutorial on the web',
+        'done': False
+    }
+]
+#--------------------------------------------------
+task_fields = {
+    'title': fields.String,
+    'description': fields.String,
+    'done': fields.Boolean,
+*   'uri': fields.Url('task')
+}
+```
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+### Part 3,4 
+
+```
+class TaskListAPI(Resource):
+    decorators = [auth.login_required]
+
+*   def __init__(self):
+        self.reqparse = reqparse.RequestParser()
+        self.reqparse.add_argument('title', type=str, required=True,
+                                   help='No task title provided',
+                                   location='json')
+        self.reqparse.add_argument('description', type=str, default="",
+                                   location='json')
+        super(TaskListAPI, self).__init__()
+
+*   def get(self):
+        return {'tasks': [marshal(task, task_fields) for task in tasks]}
+
+*   def post(self):
+        args = self.reqparse.parse_args()
+        task = {
+            'id': tasks[-1]['id'] + 1,
+            'title': args['title'],
+            'description': args['description'],
+            'done': False
+        }
+        tasks.append(task)
+        return {'task': marshal(task, task_fields)}, 201
+```
+
+]]
+.column_t2[.vmiddle[
+
+```
+class TaskAPI(Resource):
+    decorators = [auth.login_required]
+
+*   def __init__(self):
+        self.reqparse = reqparse.RequestParser()
+        self.reqparse.add_argument('title', type=str, location='json')
+        self.reqparse.add_argument('description', type=str, location='json')
+        self.reqparse.add_argument('done', type=bool, location='json')
+        super(TaskAPI, self).__init__()
+
+*   def get(self, id):
+        task = [task for task in tasks if task['id'] == id]
+        if len(task) == 0: abort(404)
+        return {'task': marshal(task[0], task_fields)}
+
+*   def put(self, id):
+        task = [task for task in tasks if task['id'] == id]
+        if len(task) == 0: abort(404)
+        task = task[0]
+        args = self.reqparse.parse_args()
+        for k, v in args.items():
+            if v is not None:
+                task[k] = v
+        return {'task': marshal(task, task_fields)}
+
+*   def delete(self, id):
+        task = [task for task in tasks if task['id'] == id]
+        if len(task) == 0: abort(404)
+        tasks.remove(task[0])
+        return {'result': True}
+```
+
+]]
+
+---
+class: column_t1
+# The APIs
+####&nbsp;
+
+.tab2.fullwidth[
+| HTTP Method | URI | Endpoint | Action | 
+|-----------|:---:|:--------:|:------:|
+|GET | /todo/api/v1.0/tasks | **tasks** |Retrieve list of tasks|
+|POST | /todo/api/v1.0/tasks | **tasks** |Create a new task|
+|GET | /todo/api/v1.0/tasks/[task_id] | task |Retrieve a task|
+|PUT | /todo/api/v1.0/tasks/[task_id] | task |Update an existing task|
+|DELETE | /todo/api/v1.0/tasks/[task_id] | task |Delete a task|
+]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+###Notes
+- Marshalling
+- `RequestParser` : define the arguments and how to validate them.
+- A side benefit of letting Flask-RESTful do the validation is that now there is no need to have a handler for the bad request code 400 error, this is all taken care of by the extension.
+
+]]
+.column_t1[.vmiddle[
+#Example #1
+####&nbsp;
+
+.figstyle1[
+![](images/mgrinberg-ex01.jpg)
+]
+
+]]
+
+---
+
+#References
+
+- [Designing a RESTful API using Flask-RESTful](http://blog.miguelgrinberg.com/post/designing-a-restful-api-using-flask-restful)
+- [Code Repo @github](https://github.com/miguelgrinberg/REST-tutorial/blob/master/rest-server-v2.py)
+
+
+---
+class: split-30 nopadding
+background-image: url(https://cloud.githubusercontent.com/assets/4231611/11257839/21b8b24e-8e87-11e5-9099-25f77383f620.jpg)
+
+.column_t2.center[.vmiddle[
+.fgtransparent[
+# <i class="icon-python fa-4x"></i>
+]
+]]
+.column_t2[.vmiddle.nopadding[
+.shadelight[.boxtitle1[
+# END
+
+### [Eueung Mulyana](https://github.com/eueung)
+### http://eueung.github.io/python/flask-restful
+#### Python CodeLabs | [Attribution-ShareAlike CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/)
+#### 
+]]
+]]
+
+
+
+    </textarea>
+    <script src="https://gnab.github.io/remark/downloads/remark-0.12.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create({highlightLanguage:'python', highlightStyle: 'tomorrow', highlightLines: true});
+    </script>
+  </body>
+</html>
