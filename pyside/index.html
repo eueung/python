@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Python GUI - PySide</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Open+Sans);
+
+body { font-family: 'Open Sans Condensed','Droid Serif','Open Sans', sans-serif; }
+h1, h2, h3, h4 {
+    font-family: 'Yanone Kaffeesatz';
+    font-weight: 400;
+    margin-bottom: 0;
+    margin-top: 10px;
+}
+h1 { font-size: 3.5em; }
+h2 { font-size: 3em; }
+h3 { font-size: 1.6em; }
+h4 { font-size: 1em; }
+.inverse {
+    background: #272822;
+    color: #777872;
+    text-shadow: 0 0 20px #333;
+}
+.inverse h1, .inverse h2 {
+    color: #f3f3f3;
+    line-height: 0.8em;
+}
+
+code { font-family: 'Ubuntu Mono', sans-serif !important; }
+pre code { background-color: #fff; border-top: 5px solid #ddd; border-bottom: 5px solid #ddd; margin-top: 10px;}
+h1 code { font-weight: 300; font-size: 1em !important; background-color: #eee; padding: 0px 5px; border-radius: 5px; }
+
+a {
+    color: #F92672;
+    text-decoration: none;
+}
+.task {
+    float: right;
+    font-size: 0.9em;
+    padding-top: 0.6em;
+}
+.task a {
+    color: #080;
+    text-decoration: none;
+}
+.right {
+    float: right;
+    margin-left: 1em;
+}
+.pushdown {
+    margin-top: 12em;
+}
+
+.done-true {
+  text-decoration: line-through;
+  color: grey;
+}
+
+ul.unstyled,ol.unstyled{margin-left:0;list-style:none;}
+
+.remark-visible .remark-slide-scaler {
+  overflow-y: auto;
+}
+
+.nopadding { padding:0 !important;}
+
+.red    { color: #FF4943; }
+.gray   { color: #787878; }
+.green  { color: #87A558; }
+.blue   { color: #41C8F0; }
+.yellow { color: #DBEC62; }
+.white  { color: #FFFFFF; }
+.or1 {color: #FFD740;}
+.bluelight {color: #B3E5FC;}
+.dark1 {color: #B6B6B6;}
+
+.bold { font-weight: bold; }
+
+pre {
+  background-color: transparent ; 
+  border: 0 ; 
+  border-radius: 0 ;
+  padding: 10px 0; 
+}
+.remark-code {
+  font-size: 14px;
+  line-height: 1.25;
+}
+
+.remark-code-line-highlighted {
+  font-weight: bold;
+  background-color: transparent;
+  text-shadow: 
+      0px 10px 30px rgba(255, 98, 20, .5),
+      10px 0px 30px rgba(255, 98, 20, .5),
+      -10px 0px 30px rgba(255, 98, 20, .5),
+      0px -10px 30px rgba(255, 98, 20, .5);
+}
+.reverse .remark-code-line-highlighted {
+    font-weight: normal !important;
+    color: transparent;
+    text-shadow: 0 0 5px #000;
+    font-size: 1em;
+}
+.reverse .remark-code-line { font-weight: bold; }
+
+.shade {
+    padding: 0;
+}
+
+.shade  {
+    background-color:rgba(0,0,0,0.7);
+    color: white;
+    width: 100%;
+    padding: 1em 0;
+}
+
+.shadelight  {
+    background-color:rgba(0,0,0,0.5);
+    color: white;
+    width: 100%;
+    padding: 0;
+}
+
+.fgtransparent h1 {
+  color:rgba(255,255,255,0.8) !important;
+  text-shadow: none;
+}
+
+.nosplit>div:first-of-type {width: 100%; height:100%; float:left; }
+.split-30>div:first-of-type {width: 30%; height:100%; float:left; }
+.split-30>div:nth-of-type(2) {width: 70%; height:100%; float:right;}
+.split-50>div:first-of-type {width: 50%; height:100%; float:left; }
+.split-50>div:nth-of-type(2) {width: 50%; height:100%; float:right;}
+.column_t1 {
+  background-color: #2aa9df;
+  color: white;
+}
+.column_t1 a {color: #B3E5FC;}
+.column_t1 pre code {
+  -webkit-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);  
+}
+.column_t2 {
+}
+
+.uline {text-decoration: underline;}
+
+.vmiddle {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  padding:1em;
+}
+.pushfront {
+    z-index: 2;   
+}
+.remark-slide-content .vmiddle h1 {margin-top: 0;}
+
+.boxtitle1 {
+  padding:1em;
+  text-align: left;
+  border-left: white solid 0.5em;
+  border-right: white solid 0em;
+}
+
+.figplain img {
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-top: #eee solid 20px;
+  border-bottom: #eee solid 20px;
+}
+.noborder img {border:none !important;}
+
+.figstyle1 img {
+  -webkit-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);  
+  width: 100%;
+}
+.figstyle1h img {
+  -webkit-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);  
+  max-width: 100%;
+  max-height: 600px;
+}
+.figstyle1h {}
+
+.tab1 table {
+  background: rgba(255, 255, 255, 0.12);
+  border: 4px solid #eeeeee;
+  margin: 0px auto;
+  border-collapse:collapse;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); }
+
+.tab1 table td, .tab1 table th {
+  border: 1px solid white;
+  padding: 0.25em 1em;
+  }
+
+.tab1 table th {
+  opacity: 1;
+  background-color:#ff6600;
+  vertical-align:middle;
+} 
+.fullwidth {width: 100% !important;}
+.fullheight {max-height: 100% !important;}
+
+.tab2 table {
+  background: rgba(255, 255, 255, 0.12);
+  border: 4px solid #eeeeee;
+  margin: 0px auto;
+  border-collapse:collapse;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); }
+
+.tab2 table td, .tab2 table th {
+  border: 1px solid #eee;
+  padding: 0.25em 1em;
+  }
+
+.tab2 table th {
+  opacity: 1;
+  background-color:#ff6600;
+  vertical-align:middle;
+}  
+
+    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://eueung.github.io/EL5244/mfizz22/font-mfizz.css">
+  </head>
+  <body>
+    <textarea id="source">
+
+
+class: split-30 nopadding
+background-image: url(https://cloud.githubusercontent.com/assets/4231611/11023050/a3c1acf8-86a0-11e5-8ca5-af186dc41b1b.jpg)
+
+.column_t2.center[.vmiddle[
+.fgtransparent[
+# <i class="icon-python fa-4x"></i>
+]
+]]
+.column_t2[.vmiddle.nopadding[
+.shadelight[.boxtitle1[
+# Python Desktop GUI - PySide
+
+### [Eueung Mulyana](https://github.com/eueung)
+### http://eueung.github.io/python/pyside
+#### Python CodeLabs | [Attribution-ShareAlike CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/)
+#### 
+]]
+]]
+
+---
+class: split-30 nopadding
+background-image: url(https://cloud.githubusercontent.com/assets/4231611/11023050/a3c1acf8-86a0-11e5-8ca5-af186dc41b1b.jpg)
+
+.column_t2.center[.vmiddle[
+.fgtransparent[
+# <i class="icon-python fa-4x"></i>
+]
+]]
+.column_t2[.vmiddle.nopadding[
+.shadelight[.boxtitle1[
+# Basics
+#### 
+]]
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+
+.figstyle1[
+![](images/fig01.jpg)
+]
+
+]]
+.column_t1[.vmiddle[
+### Example #1
+
+```
+from PySide.QtGui import QApplication, QLabel
+#--------------------------------------
+*app = QApplication([])
+#--------------------------------------
+window = QLabel('Window from label')
+*window.show()
+#--------------------------------------
+*app.exec_()
+```
+
+### Example #2
+
+```
+*from PySide.QtGui import QApplication, QPushButton
+#--------------------------------------
+app = QApplication([])
+#--------------------------------------
+*button = QPushButton('Exit')
+*button.clicked.connect(app.exit)
+button.show()
+#--------------------------------------
+app.exec_()
+```
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+
+### Example #3
+
+```
+import sys
+#--------------------------------------
+from PySide.QtGui import QApplication, QLabel
+#--------------------------------------
+app = QApplication(sys.argv)
+*label = QLabel("<font color=red size=40>Hello World</font>")
+label.show()
+#--------------------------------------
+app.exec_()
+sys.exit()
+```
+
+### Example #4
+
+```
+import sys
+import PySide
+from PySide.QtGui import QApplication, QMessageBox
+#--------------------------------------
+app = QApplication(sys.argv)
+#--------------------------------------
+*msgBox = QMessageBox()
+*msgBox.setText("Hello World - using PySide version " + PySide.__version__)
+*msgBox.exec_()
+```
+
+]]
+.column_t2[.vmiddle[
+
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+## Example #5
+####&nbsp;
+
+.figstyle1[
+![](images/fig02.jpg)
+]
+
+]]
+.column_t2[.vmiddle[
+
+```
+from PySide.QtGui import QApplication, QPushButton, QColorDialog, QMessageBox, QPixmap
+#--------------------------------------
+*def choose_color():
+    color  = QColorDialog().getColor()
+    
+    msgbox = QMessageBox()
+*   if color.isValid():
+        pixmap = QPixmap(50, 50)
+        pixmap.fill(color)
+        msgbox.setWindowTitle(u'Selected Color')
+        msgbox.setIconPixmap(pixmap)
+*   else:
+        msgbox.setWindowTitle(u'No Color was Selected')
+*   msgbox.exec_()
+#--------------------------------------
+app = QApplication([])
+#--------------------------------------    
+button = QPushButton('Choose Color')
+*button.clicked.connect(choose_color)
+button.show()
+#--------------------------------------
+app.exec_()
+```
+
+]]
+
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+
+.figstyle1[
+![](images/fig03.jpg)
+]
+
+]]
+.column_t1[.vmiddle[
+## Example #6
+
+```
+from PySide.QtGui import QApplication, QPushButton, QColorDialog, QMessageBox
+#--------------------------------------
+*class ButtonPainter(object):
+  def __init__(self, button):
+    self.button = button
+
+* def choose_color(self):
+    color  = QColorDialog().getColor()
+    
+*   if color.isValid():
+*       self.button.setStyleSheet(u'background-color:' + color.name())
+*   else:
+        msgbox = QMessageBox()
+        msgbox.setWindowTitle(u'No Color was Selected')
+        msgbox.exec_()
+#--------------------------------------
+app = QApplication([])
+#--------------------------------------  
+button = QPushButton('Choose Color')
+button_painter = ButtonPainter(button)
+*button.clicked.connect(button_painter.choose_color)
+button.show()
+#--------------------------------------
+app.exec_()
+```
+
+]]
+
+---
+class: split-30 nopadding
+background-image: url(https://cloud.githubusercontent.com/assets/4231611/11023050/a3c1acf8-86a0-11e5-8ca5-af186dc41b1b.jpg)
+
+.column_t2.center[.vmiddle[
+.fgtransparent[
+# <i class="icon-python fa-4x"></i>
+]
+]]
+.column_t2[.vmiddle.nopadding[
+.shadelight[.boxtitle1[
+# [PySideSimplicissimus](https://wiki.qt.io/PySide-Newbie-Tutorials)
+### @[OldAl](https://github.com/OldAl)
+#### 
+]]
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+# Example #1
+
+```
+*pyside-uic quitter.ui -o ui_quitter.py
+```
+
+.figstyle1[
+![](images/fig04.jpg)
+]
+
+]]
+.column_t2[.vmiddle[
+
+```
+import sys
+from PySide.QtGui import QMainWindow, QPushButton, QApplication
+*from ui_quitter import Ui_MainWindow
+#----------------------------------
+*class MainWindow(QMainWindow, Ui_MainWindow):
+    def __init__(self, parent=None):
+        super(MainWindow, self).__init__(parent)
+        self.setupUi(self)
+#----------------------------------
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+*   frame = MainWindow()
+*   frame.show()
+    app.exec_()
+```
+
+]]
+
+---
+class: column_t1 middle center
+
+.figstyle1[
+![](images/fig05.jpg)
+]
+### Qt4 Designer - .bluelight[quitter.ui]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+# Example #2
+
+```
+*pyside-uic about.ui > ui_about.py
+```
+
+.figstyle1[
+![](images/fig06.jpg)
+]
+
+]]
+.column_t2[.vmiddle[
+
+```
+import sys
+import platform
+#----------------------------------
+import PySide
+from PySide.QtGui import QApplication, QMainWindow, QTextEdit, QPushButton, QMessageBox
+#----------------------------------
+*from ui_about import Ui_MainWindow
+#----------------------------------
+__version__ = '0.0.1'
+#----------------------------------
+class MainWindow(QMainWindow, Ui_MainWindow):
+    def __init__(self, parent=None):
+        super(MainWindow, self).__init__(parent)
+        self.setupUi(self)
+*       self.aboutButton.clicked.connect(self.about)
+    #----------------------------------
+*   def about(self):
+        QMessageBox.about(self, "About PySide, Platform and the like",
+        """<b>Platform Details</b> v {}
+        <p>Copyright &copy; 2010 Joe Bloggs. All rights reserved in accordance with GPL v2 or later - NO WARRANTIES!
+        <p>This application can be used for displaying platform details.
+        <p>Python {} - PySide version {} - Qt version {} on {}""".format(__version__,
+        platform.python_version(), PySide.__version__, PySide.QtCore.__version__, platform.system()))
+#----------------------------------
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    frame = MainWindow()
+    frame.show()
+    app.exec_()
+```
+
+]]
+
+---
+class: middle center
+
+.figstyle1[
+![](images/fig07.jpg)
+]
+### Qt4 Designer - .blue[about.ui]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+
+# Example #3
+
+```
+*pyside-uic licence.ui > ui_licence.py
+```
+
+.figstyle1[
+![](images/fig08.jpg)
+]
+
+]]
+.column_t1[.vmiddle[
+
+```
+import sys
+from PySide.QtGui import QApplication, QMainWindow, QTextEdit, QPushButton
+*from ui_licence import Ui_MainWindow
+#----------------------------------
+__version__ = '3.3.0'
+#----------------------------------
+class MainWindow(QMainWindow, Ui_MainWindow):
+    def __init__(self, parent=None):
+        '''Mandatory initialisation of a class.'''
+        super(MainWindow, self).__init__(parent)
+        self.setupUi(self)
+*       self.showButton.clicked.connect(self.fileRead)
+        
+*   def fileRead(self):
+        '''Read and display licence.'''
+        with open('CCPL.txt') as nonamefile:
+*           self.textEdit.setText(nonamefile.read())
+#----------------------------------
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    frame = MainWindow()
+    frame.show()
+    app.exec_()
+```
+
+]]
+
+---
+class: column_t1 middle center
+
+.figstyle1[
+![](images/fig09.jpg)
+]
+### Qt4 Designer - .bluelight[licence.ui]
+
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+# Example #4
+
+```
+*pyside-uic combine.ui > ui_combine.py
+```
+
+.figstyle1[
+![](images/fig10.jpg)
+]
+
+]]
+.column_t2[.vmiddle[
+
+```
+import sys
+import platform
+#---------------------------------------------
+import PySide
+from PySide.QtGui import QApplication, QMainWindow, QMessageBox
+#---------------------------------------------
+__version__ = '3.0.3'
+*from ui_combine import Ui_MainWindow
+#---------------------------------------------
+class MainWindow(QMainWindow, Ui_MainWindow):
+    def __init__(self, parent=None):
+        super(MainWindow, self).__init__(parent)
+        self.setupUi(self)
+*       self.actionShow_CCPL.triggered.connect(self.showCCPL)
+*       self.action_About.triggered.connect(self.about)        
+*   def showCCPL(self):
+        with open('CCPL.txt') as fi:
+            self.textEdit.setText(fi.read())
+*   def about(self):
+        QMessageBox.about(self, "About PySide, Platform and version.",
+                """<b> about.py version %s </b> 
+                <p>Copyright &copy; 2013 by Algis Kabaila. This work is made available under  the terms of Creative Commons Attribution-ShareAlike 3.0 license, http://creativecommons.org/licenses/by-sa/3.0/.
+                <p>This application is useful for displaying Qt version and other details.
+                <p>Python %s -  PySide version %s - Qt version %s on %s""" % (__version__, 
+                platform.python_version(), PySide.__version__,  PySide.QtCore.__version__, platform.system()))
+#---------------------------------------------
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    frame = MainWindow()
+    frame.show()
+    sys.exit(app.exec_())
+```
+
+]]
+
+---
+class: column_t1 middle center
+
+.figstyle1[
+![](images/fig11.jpg)
+]
+### Qt4 Designer - .bluelight[combine.ui]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+# Example #5
+
+```
+*pyside-rcc combine.qrc -o qrc_combine.py
+```
+
+.figstyle1[
+![](images/fig12.jpg)
+]
+
+]]
+.column_t2[.vmiddle[
+
+```xml
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+<file alias="quit.png">select_tango/32x32/actions/system-log-out.png</file>
+<file alias="about.png">select_tango/32x32/apps/preferences-system-session.png</file>
+<file alias="showgpl.png">select_tango/32x32/apps/help-browser.png</file>
+</qresource>
+</RCC>
+```
+.center[combine.qrc]
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+
+```
+import sys
+import platform
+import PySide
+from PySide.QtGui import (QApplication, QMainWindow, QMessageBox,  QIcon)
+#-----------------------------
+__version__ = '3.1.5'
+from ui_combine import Ui_MainWindow
+*import qrc_combine
+#-----------------------------
+class MainWindow(QMainWindow, Ui_MainWindow):
+    def __init__(self, parent=None):
+        super(MainWindow, self).__init__(parent)
+        self.setupUi(self)
+        self.setWindowTitle('Combine Code Blocks.')
+        self.actionShow_CCPL.triggered.connect(self.showCCPL)
+        self.action_About.triggered.connect(self.about)                
+*       iconToolBar = self.addToolBar('') 
+#------------------------------------------------------
+# Add icons to appear in tool bar - step 1
+*       self.actionShow_CCPL.setIcon(QIcon(":/showgpl.png"))
+*       self.action_About.setIcon(QIcon(":/about.png"))
+*       self.action_Close.setIcon(QIcon(":/quit.png"))
+#------------------------------------------------------
+# Show a tip on the Status Bar - step 2
+*       self.actionShow_CCPL.setStatusTip("Show CCP Licence")
+*       self.action_About.setStatusTip("Pop up the About dialog.")
+*       self.action_Close.setStatusTip("Close the program.")
+#------------------------------------------------------        
+*       iconToolBar.addAction(self.actionShow_CCPL)
+*       iconToolBar.addAction(self.action_About)
+*       iconToolBar.addAction(self.action_Close)
+```
+
+]]
+.column_t1[.vmiddle[
+# Example #5
+
+```
+*   def showCCPL(self):
+        # ...        
+        
+*   def about(self):
+        # ...                       
+#-----------------------------                
+*if __name__ == '__main__':
+    # ...
+```
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+
+```
+import ...
+from PySide.QtGui import (QApplication, QMainWindow, QMessageBox, QIcon)
+#------------------------------------------------------
+__version__ = '3.1.5'
+*from ui_combine import Ui_MainWindow as Ui
+import qrc_combine
+#------------------------------------------------------   
+*class MainWindow(QMainWindow):
+    def __init__(self, parent=None):
+        super(MainWindow, self).__init__(parent)
+*       # Store Ui() as class variable self.ui
+*       self.ui = Ui()
+        self.ui.setupUi(self)
+        self.setWindowTitle('Combine Code Blocks.')        
+        self.ui.actionShow_CCPL.triggered.connect(self.showCCPL)
+        self.ui.action_About.triggered.connect(self.about)        
+        iconToolBar = self.addToolBar("iconBar.png") 
+#------------------------------------------------------
+# Add icons to appear in tool bar - step 1
+*       self.ui.actionShow_CCPL.setIcon(QIcon(":/showgpl.png"))
+        self.ui.action_About.setIcon(QIcon(":/about.png"))
+        self.ui.action_Close.setIcon(QIcon(":/quit.png"))
+#------------------------------------------------------
+# Show a tip on the Status Bar - step 2
+*       self.ui.actionShow_CCPL.setStatusTip("Show CC Licence")
+        self.ui.action_About.setStatusTip("Pop up the About dialog.")
+        self.ui.action_Close.setStatusTip("Close the program.")
+#------------------------------------------------------        
+*       iconToolBar.addAction(self.ui.actionShow_CCPL)
+        iconToolBar.addAction(self.ui.action_About)
+        iconToolBar.addAction(self.ui.action_Close)
+```
+
+]]
+.column_t1[.vmiddle[
+### Example #5 - Alternative 
+
+```
+    def showCCPL(self):
+        with open('CCPL.txt') as fi:                  
+*           self.ui.textEdit.setText(fi.read())        
+        
+    def about(self):
+        QMessageBox.about(self, "About PySide, Platform and the like",
+                """<b> about.py version %s </b> 
+                <p>Copyright &copy; 2013 by Algis Kabaila. This work is made available under  the terms of
+                Creative Commons Attribution-ShareAlike 3.0 license, http://creativecommons.org/licenses/by-sa/3.0/.
+                <p>This application is useful for displaying Qt version and other details.
+                <p>Python %s -  PySide version %s - Qt version %s on %s""" %
+                (__version__, platform.python_version(), PySide.__version__, PySide.QtCore.__version__, platform.system()))                        
+#------------------------------------------------------
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    frame = MainWindow()
+    frame.show()
+    sys.exit(app.exec_())
+```
+
+]]
+
+
+---
+
+# References
+
+1. [PySide-Newbie-Tutorials](https://wiki.qt.io/PySide-Newbie-Tutorials)
+1. [OldAl/tuts4pyside](https://github.com/OldAl/tuts4pyside)
+1. [techtonik/pyside](https://bitbucket.org/techtonik/pyside-copy-paste/src/5f8c1f8cf12d?at=default)
+
+# Other Readings
+1. [PySide - Qt Wiki](https://wiki.qt.io/PySide)
+1. [PySide Tutorials - Qt Wiki](https://wiki.qt.io/PySide_Tutorials)
+1. [PySide Example Applications](https://wiki.qt.io/PySide_Example_Applications)
+1. [PySide/Examples](https://github.com/PySide/Examples)
+1. [shuge/Qt-Python-Binding-Examples](https://github.com/shuge/Qt-Python-Binding-Examples)
+1. [Friz-zy/basis](https://github.com/Friz-zy/basis)
+
+---
+class: split-30 nopadding
+background-image: url(https://cloud.githubusercontent.com/assets/4231611/11023050/a3c1acf8-86a0-11e5-8ca5-af186dc41b1b.jpg)
+
+.column_t2.center[.vmiddle[
+.fgtransparent[
+# <i class="icon-python fa-4x"></i>
+]
+]]
+.column_t2[.vmiddle.nopadding[
+.shadelight[.boxtitle1[
+# END
+
+### [Eueung Mulyana](https://github.com/eueung)
+### http://eueung.github.io/python/pyside
+#### Python CodeLabs | [Attribution-ShareAlike CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/)
+#### 
+]]
+]]
+
+
+
+    </textarea>
+    <script src="https://gnab.github.io/remark/downloads/remark-0.12.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create({highlightLanguage:'python', highlightStyle: 'tomorrow', highlightLines: true});
+    </script>
+  </body>
+</html>
