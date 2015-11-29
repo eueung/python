@@ -8,9 +8,5 @@
 - [Flask-SQLAlchemy](http://eueung.github.io/python/flask-sqlalchemy) | [PDF](https://speakerdeck.com/eueung/flask-sqlalchemy)
 - [sqlite](http://eueung.github.io/python/sqlite) | [PDF](https://speakerdeck.com/eueung/python-sqlite)
 - [Flask-RESTful](http://eueung.github.io/python/flask-restful) | [PDF](https://speakerdeck.com/eueung/flask-restful)
+- [Python GUI - PySide](http://eueung.github.io/python/pyside) | [PDF](https://speakerdeck.com/eueung/intro-to-pyside)
 
---- 
-## Notebooks
-- ...
- 
----
