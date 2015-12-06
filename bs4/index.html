@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Python - Beautiful Soup - bs4</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Open+Sans);
+
+body { font-family: 'Open Sans Condensed','Droid Serif','Open Sans', sans-serif; }
+h1, h2, h3, h4 {
+    font-family: 'Yanone Kaffeesatz';
+    font-weight: 400;
+    margin-bottom: 0;
+    margin-top: 10px;
+}
+h1 { font-size: 3.5em; }
+h2 { font-size: 3em; }
+h3 { font-size: 1.6em; }
+h4 { font-size: 1em; }
+.inverse {
+    background: #272822;
+    color: #777872;
+    text-shadow: 0 0 20px #333;
+}
+.inverse h1, .inverse h2 {
+    color: #f3f3f3;
+    line-height: 0.8em;
+}
+
+code { font-family: 'Ubuntu Mono', sans-serif !important; }
+pre code { background-color: #fff; border-top: 5px solid #ddd; border-bottom: 5px solid #ddd; margin-top: 10px;}
+h1 code { font-weight: 300; font-size: 1em !important; background-color: #eee; padding: 0px 5px; border-radius: 5px; }
+
+a {
+    color: #F92672;
+    text-decoration: none;
+}
+.task {
+    float: right;
+    font-size: 0.9em;
+    padding-top: 0.6em;
+}
+.task a {
+    color: #080;
+    text-decoration: none;
+}
+.right {
+    float: right;
+    margin-left: 1em;
+}
+.pushdown {
+    margin-top: 12em;
+}
+
+.done-true {
+  text-decoration: line-through;
+  color: grey;
+}
+
+ul.unstyled,ol.unstyled{margin-left:0;list-style:none;}
+
+.remark-visible .remark-slide-scaler {
+  overflow-y: auto;
+}
+
+.nopadding { padding:0 !important;}
+
+.red    { color: #FF4943; }
+.gray   { color: #787878; }
+.green  { color: #87A558; }
+.blue   { color: #41C8F0; }
+.yellow { color: #DBEC62; }
+.white  { color: #FFFFFF; }
+.or1 {color: #FFD740;}
+.bluelight {color: #B3E5FC;}
+.dark1 {color: #B6B6B6;}
+
+.bold { font-weight: bold; }
+
+pre {
+  background-color: transparent ; 
+  border: 0 ; 
+  border-radius: 0 ;
+  padding: 10px 0; 
+}
+.remark-code {
+  font-size: 14px;
+  line-height: 1.25;
+}
+
+.remark-code-line-highlighted {
+  font-weight: bold;
+  background-color: transparent;
+  text-shadow: 
+      0px 10px 30px rgba(255, 98, 20, .5),
+      10px 0px 30px rgba(255, 98, 20, .5),
+      -10px 0px 30px rgba(255, 98, 20, .5),
+      0px -10px 30px rgba(255, 98, 20, .5);
+}
+.reverse .remark-code-line-highlighted {
+    font-weight: normal !important;
+    color: transparent;
+    text-shadow: 0 0 5px #000;
+    font-size: 1em;
+}
+.reverse .remark-code-line { font-weight: bold; }
+
+.shade {
+    padding: 0;
+}
+
+.shade  {
+    background-color:rgba(0,0,0,0.7);
+    color: white;
+    width: 100%;
+    padding: 1em 0;
+}
+
+.shadelight  {
+    background-color:rgba(0,0,0,0.5);
+    color: white;
+    width: 100%;
+    padding: 0;
+}
+
+.fgtransparent h1 {
+  color:rgba(255,255,255,0.8) !important;
+  text-shadow: none;
+}
+
+.nosplit>div:first-of-type {width: 100%; height:100%; float:left; }
+.split-30>div:first-of-type {width: 30%; height:100%; float:left; }
+.split-30>div:nth-of-type(2) {width: 70%; height:100%; float:right;}
+.split-50>div:first-of-type {width: 50%; height:100%; float:left; }
+.split-50>div:nth-of-type(2) {width: 50%; height:100%; float:right;}
+.column_t1 {
+  background-color: #2aa9df;
+  color: white;
+}
+.column_t1 a {color: #B3E5FC;}
+.column_t1 pre code {
+  -webkit-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);  
+}
+.column_t2 {
+}
+
+.uline {text-decoration: underline;}
+
+.vmiddle {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  padding:1em;
+}
+.pushfront {
+    z-index: 2;   
+}
+.remark-slide-content .vmiddle h1 {margin-top: 0;}
+
+.boxtitle1 {
+  padding:1em;
+  text-align: left;
+  border-left: white solid 0.5em;
+  border-right: white solid 0em;
+}
+
+.figplain img {
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-top: #eee solid 20px;
+  border-bottom: #eee solid 20px;
+}
+.noborder img {border:none !important;}
+
+.figstyle1 img {
+  -webkit-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);  
+  width: 100%;
+}
+.figstyle1h img {
+  -webkit-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);  
+  max-width: 100%;
+  max-height: 600px;
+}
+.figstyle1h {}
+
+.tab1 table {
+  background: rgba(255, 255, 255, 0.12);
+  border: 4px solid #eeeeee;
+  margin: 0px auto;
+  border-collapse:collapse;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); }
+
+.tab1 table td, .tab1 table th {
+  border: 1px solid white;
+  padding: 0.25em 1em;
+  }
+
+.tab1 table th {
+  opacity: 1;
+  background-color:#ff6600;
+  vertical-align:middle;
+} 
+.fullwidth, .fullwidth table {width: 100% !important;}
+.fullheight {max-height: 100% !important;}
+
+.tab2 table {
+  background: rgba(255, 255, 255, 0.12);
+  border: 4px solid #eeeeee;
+  margin: 0px auto;
+  border-collapse:collapse;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); }
+
+.tab2 table td, .tab2 table th {
+  border: 1px solid #eee;
+  padding: 0.25em 1em;
+  }
+
+.tab2 table th {
+  opacity: 1;
+  background-color:#ff6600;
+  vertical-align:middle;
+}  
+.fonth2 {font-size: 3em;}
+
+    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://eueung.github.io/EL5244/mfizz22/font-mfizz.css">
+  </head>
+  <body>
+    <textarea id="source">
+
+
+class: split-30 nopadding
+background-image: url(https://cloud.githubusercontent.com/assets/4231611/11557578/f6d470f4-99df-11e5-9cf5-3445d86138c5.jpg)
+
+.column_t2.center[.vmiddle[
+.fgtransparent[
+# <i class="icon-python fa-4x"></i>
+]
+]]
+.column_t2[.vmiddle.nopadding[
+.shadelight[.boxtitle1[
+# Python - BeautifulSoup bs4
+
+### [Eueung Mulyana](https://github.com/eueung)
+### http://eueung.github.io/python/bs4
+#### Python CodeLabs | [Attribution-ShareAlike CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/)
+#### 
+]]
+]]
+
+---
+class: column_t1 middle
+
+.fonth2[
+.tab1.fullwidth[
+| Agenda   |
+|:-------------:|
+| bs4 Basics |
+| Easy Web Scraping |
+]]
+
+ 
+
+---
+class: split-30 nopadding
+background-image: url(https://cloud.githubusercontent.com/assets/4231611/11557578/f6d470f4-99df-11e5-9cf5-3445d86138c5.jpg)
+
+.column_t2.center[.vmiddle[
+.fgtransparent[
+# <i class="icon-python fa-4x"></i>
+]
+]]
+.column_t2[.vmiddle.nopadding[
+.shadelight[.boxtitle1[
+# Basics
+#### 
+]]
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+# Example #1
+
+```
+*html_doc = """
+<html><head><title>The Dormouse's story</title></head>
+<body>
+<p class="title"><b>The Dormouse's story</b></p>
+
+<p class="story">Once upon a time there were three little sisters; and their names were
+<a href="http://example.com/elsie" class="sister" id="link1">Elsie</a>,
+<a href="http://example.com/lacie" class="sister" id="link2">Lacie</a> and
+<a href="http://example.com/tillie" class="sister" id="link3">Tillie</a>;
+and they lived at the bottom of a well.</p>
+
+<p class="story">...</p>
+"""
+
+from bs4 import BeautifulSoup
+*soup = BeautifulSoup(html_doc, 'html.parser')
+
+print(soup.prettify())
+```
+
+]]
+.column_t1[.vmiddle[
+
+```html
+<html>
+ <head>
+  <title>
+   The Dormouse's story
+  </title>
+ </head>
+ <body>
+  <p class="title">
+   <b>
+    The Dormouse's story
+   </b>
+  </p>
+  <p class="story">
+   Once upon a time there were three little sisters; and their names were
+*  <a class="sister" href="http://example.com/elsie" id="link1"> Elsie </a> ,
+*  <a class="sister" href="http://example.com/lacie" id="link2"> Lacie </a> and
+*  <a class="sister" href="http://example.com/tillie" id="link3"> Tillie </a> ;
+   and they lived at the bottom of a well.
+  </p>
+* <p class="story"> ...  </p>
+ </body>
+</html>
+```
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+# Example #2
+
+```
+print soup.title             # <title>The Dormouse's story</title>
+print soup.title.name        # u'title'
+print soup.title.string      # u'The Dormouse's story'
+print soup.title.parent.name # u'head'
+
+print soup.p                 # <p class="title"><b>The Dormouse's story</b></p>
+print soup.p['class']        # u'title'
+print soup.a                 # <a class="sister" href="http://example.com/elsie" id="link1">Elsie</a>
+
+*print soup.find(id="link3")  # <a class="sister" href="http://example.com/tillie" id="link3">Tillie</a>
+*print soup.find_all('a')     # [<a class="sister" href="http://example.com/elsie" id="link1">Elsie</a>,
+                             #  <a class="sister" href="http://example.com/lacie" id="link2">Lacie</a>,
+                             #  <a class="sister" href="http://example.com/tillie" id="link3">Tillie</a>]
+```
+
+```
+for link in soup.find_all('a'):
+*   print(link.get('href'))
+
+print(soup.get_text())
+```
+
+]]
+.column_t2[.vmiddle[
+
+```html
+<title>The Dormouse's story</title>
+title
+The Dormouse's story
+head
+
+<p class="title"><b>The Dormouse's story</b></p>
+[u'title']
+<a class="sister" href="http://example.com/elsie" id="link1">Elsie</a>
+
+*<a class="sister" href="http://example.com/tillie" id="link3">Tillie</a>
+*[<a class="sister" href="http://example.com/elsie" id="link1">Elsie</a>, <a class="sister" href="http://example.com/lacie" id="link2">Lacie</a>, <a class="sister" href="http://example.com/tillie" id="link3">Tillie</a>]
+```
+
+```
+*http://example.com/elsie
+*http://example.com/lacie
+*http://example.com/tillie
+
+The Dormouse's story
+
+The Dormouse's story
+Once upon a time there were three little sisters; and their names were
+Elsie,
+Lacie and
+Tillie;
+and they lived at the bottom of a well.
+...
+
+```
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+# Example #3
+
+```
+head_tag = soup.head
+print head_tag           # <head><title>The Dormouse's story</title></head>
+print head_tag.contents  # [<title>The Dormouse's story</title>]
+print head_tag.string    # u'The Dormouse's story'
+
+*for child in head_tag.descendants:  # <title>The Dormouse's story</title>
+*   print(child)                    # The Dormouse's story
+# -------
+title_tag = head_tag.contents[0]
+print title_tag          # <title>The Dormouse's story</title>
+print title_tag.contents # [u'The Dormouse's story']
+print title_tag.string   # u'The Dormouse's story'
+
+text = title_tag.contents[0]
+# print text.contents    # AttributeError: 'NavigableString' object has no attribute 'contents'
+
+*for child in title_tag.children:
+*   print(child)  # The Dormouse's story
+```
+
+]]
+.column_t1[.vmiddle[
+
+```
+<head><title>The Dormouse's story</title></head>
+[<title>The Dormouse's story</title>]
+The Dormouse's story
+*<title>The Dormouse's story</title>
+*The Dormouse's story
+# -------
+<title>The Dormouse's story</title>
+[u"The Dormouse's story"]
+The Dormouse's story
+*The Dormouse's story
+```
+
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+# Example #4
+
+```
+# print soup.contents
+*print len(soup.contents)          # 1
+*print soup.contents[0].name       # u'html'
+
+*print len(list(soup.children))    # 1
+*print len(list(soup.descendants)) # 25
+# --------
+*print(soup.html.string) # None
+
+#for string in soup.strings:
+    # print(repr(string))
+    
+for string in soup.stripped_strings:
+    print(repr(string))    
+```
+
+]]
+.column_t2[.vmiddle[
+
+```
+*1
+*html
+*1
+*25
+*None
+
+# --------
+
+u"The Dormouse's story"
+u"The Dormouse's story"
+u'Once upon a time there were three little sisters; and their names were'
+u'Elsie'
+u','
+u'Lacie'
+u'and'
+u'Tillie'
+u';\nand they lived at the bottom of a well.'
+u'...'
+```
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+# Example #5
+
+```
+soup = BeautifulSoup('<b class="boldest">Extremely bold</b>')
+tag = soup.b
+*print type(tag)
+print tag.name          # u'b'
+
+tag.name = "blockquote"
+print tag               # <blockquote class="boldest">Extremely bold</blockquote>
+print tag['class']      # u'boldest'
+print tag.attrs         # {u'class': u'boldest'}
+
+tag['class'] = 'verybold'
+tag['id'] = 1
+print tag               # <blockquote class="verybold" id="1">Extremely bold</blockquote>
+# -------------
+del tag['class']
+del tag['id']
+*print tag               # <blockquote>Extremely bold</blockquote>
+
+#print tag['class']     # KeyError: 'class'
+*print(tag.get('class')) # None
+```
+
+]]
+.column_t1[.vmiddle[
+
+```html
+*<class 'bs4.element.Tag'>
+b
+<blockquote class="boldest">Extremely bold</blockquote>
+['boldest']
+{'class': ['boldest']}
+<blockquote class="verybold" id="1">Extremely bold</blockquote>
+
+# -------------
+
+*<blockquote>Extremely bold</blockquote>
+*None
+```
+
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+# Example #6
+
+```
+class_soup = BeautifulSoup('<p class="body strikeout"></p>')
+print class_soup.p['class']  # ["body", "strikeout"]
+
+class_soup = BeautifulSoup('<p class="body"></p>')
+print class_soup.p['class']  # ["body"]
+
+id_soup = BeautifulSoup('<p id="my id"></p>')
+print id_soup.p['id']      # 'my id'
+
+# ----------
+
+rel_soup = BeautifulSoup('<p>Back to the <a rel="index">homepage</a></p>')
+*print rel_soup.a['rel']    # ['index']
+
+rel_soup.a['rel'] = ['index', 'contents']
+*print(rel_soup.p)          # <p>Back to the <a rel="index contents">homepage</a></p>
+
+# ----------
+
+xml_soup = BeautifulSoup('<p class="body strikeout"></p>', 'xml')
+print xml_soup.p['class']  # u'body strikeout'
+```
+
+]]
+.column_t2[.vmiddle[
+
+```
+['body', 'strikeout']
+['body']
+my id
+# ----------
+*['index']
+*<p>Back to the <a rel="index contents">homepage</a></p>
+# ----------
+body strikeout
+```
+
+- When you turn a tag back into a string, multiple attribute values are consolidated.
+- If you parse a document as XML, there are no multi-valued attributes.
+- The `rel` attribute specifies the relationship between the current document and the linked document (Only used if the `href` attribute is present).
+
+]]
+
+
+---
+class: split-30 nopadding
+background-image: url(https://cloud.githubusercontent.com/assets/4231611/11557578/f6d470f4-99df-11e5-9cf5-3445d86138c5.jpg)
+
+.column_t2.center[.vmiddle[
+.fgtransparent[
+# <i class="icon-python fa-4x"></i>
+]
+]]
+.column_t2[.vmiddle.nopadding[
+.shadelight[.boxtitle1[
+# Easy Web Scraping
+### @[miguelgrinberg](http://blog.miguelgrinberg.com/post/easy-web-scraping-with-python)
+#### 
+]]
+]]
+
+---
+class: column_t1 middle center 
+
+.figstyle1[
+![](images/pyvideo1.jpg)
+]
+### PyCon 2014 - Page Index 
+
+---
+class: column_t1 middle center 
+
+.figstyle1[
+![](images/pyvideo2.jpg)
+]
+### PyCon 2014 - Page Details 
+
+---
+class: column_t1 middle center 
+
+.figstyle1[
+![](images/youtube.jpg)
+]
+### PyCon 2014 - YouTube 
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+# Test #1
+
+```
+import requests
+import bs4
+
+response = requests.get('http://pyvideo.org/category/50/pycon-us-2014')
+soup = bs4.BeautifulSoup(response.text)
+
+# atags = soup.select('div#video-summary-content a[href^=/video]')
+*links = [a.attrs.get('href') for a in soup.select('div#video-summary-content a[href^=/video]')]
+print links[1:5]
+```
+
+```
+['/video/2676/2d3d-graphics-with-python-on-mobile-platforms', '/video/2660/advanced-techniques-for-web-functional-testing', '/video/2660/advanced-techniques-for-web-functional-testing', '/video/2658/analyzing-rap-lyrics-with-python']
+
+*links = [a.attrs.get('href') for a in soup.select('div#video-summary-content strong a[href^=/video]')]
+```
+
+]]
+.column_t1[.vmiddle[
+
+```
+import bs4
+import re
+import requests
+import argparse
+
+from multiprocessing.pool import ThreadPool as Pool
+
+root_url = 'http://pyvideo.org'
+index_url = root_url + '/category/50/pycon-us-2014'
+
+*def get_video_page_urls():
+    response = requests.get(index_url)
+    soup = bs4.BeautifulSoup(response.text)
+*   allvids = [a.attrs.get('href') for a in soup.select('div#video-summary-content strong a[href^=/video]')]
+*   return allvids[0:10]
+```
+##.center[pycon-scraper.py #1]
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+# Test #2
+
+```
+root_url = 'http://pyvideo.org'
+video_page_url = '/video/2668/writing-restful-web-services-with-flask'
+video_data = {}
+
+response = requests.get(root_url + video_page_url)
+soup = bs4.BeautifulSoup(response.text)
+
+*video_data['title'] = soup.select('div#videobox h3')[0].get_text()
+*video_data['speakers'] = [a.get_text() for a in soup.select('div#sidebar a[href^=/speaker]')]
+*video_data['youtube_url'] = soup.select('div#sidebar a[href^=http://www.youtube.com]')[0].get_text()
+
+print video_data
+```
+
+```
+{'speakers': [u'Miguel Grinberg'], 'youtube_url': u'http://www.youtube.com/watch?v=px_vg9Far1Y', 'title': u'Writing RESTful web services with Flask'}
+```
+
+]]
+.column_t2[.vmiddle[
+
+```
+def get_video_data(video_page_url):
+    video_data = {}
+    response = requests.get(root_url + video_page_url)
+    soup = bs4.BeautifulSoup(response.text)
+    
+*   video_data['title'] = soup.select('div#videobox h3')[0].get_text()
+*   video_data['speakers'] = [a.get_text() for a in soup.select('div#sidebar a[href^=/speaker]')]
+*   video_data['youtube_url'] = soup.select('div#sidebar a[href^=http://www.youtube.com]')[0].get_text()
+    
+    # ...
+    
+    return video_data
+```
+##.center[pycon-scraper.py #2]
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+# Test #3
+
+```
+import requests
+import bs4
+import re
+
+response = requests.get('https://www.youtube.com/watch?v=px_vg9Far1Y')
+soup = bs4.BeautifulSoup(response.text)
+
+*video_data['views'] = int(re.sub('[^0-9]', '', soup.select('.watch-view-count')[0].get_text()))
+*video_data['likes'] = int(re.sub('[^0-9]', '',soup.select('.like-button-renderer-like-button span.yt-uix-button-content')[0].get_text()))
+*video_data['dislikes'] = int(re.sub('[^0-9]', '',soup.select('.like-button-renderer-dislike-button span.yt-uix-button-content')[0].get_text()))
+
+print video_data
+```
+
+```
+{'speakers': [u'Miguel Grinberg'], 'views': 11908, 'title': u'Writing RESTful web services with Flask', 'dislikes': 1, 'likes': 134, 'youtube_url': u'http://www.youtube.com/watch?v=px_vg9Far1Y'}
+```
+
+]]
+.column_t1[.vmiddle[
+
+```
+def get_video_data(video_page_url):
+    # ...
+    # initialize counters
+    video_data['views'] = 0
+    video_data['likes'] = 0
+    video_data['dislikes'] = 0
+
+    try:
+*       response = requests.get(video_data['youtube_url'], headers={'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.77 Safari/537.36'})
+        soup = bs4.BeautifulSoup(response.text)
+
+*       video_data['views'] = int(re.sub('[^0-9]', '', soup.select('.watch-view-count')[0].get_text()))
+*       video_data['likes'] = int(re.sub('[^0-9]', '',soup.select('.like-button-renderer-like-button span.yt-uix-button-content')[0].get_text()))
+*       video_data['dislikes'] = int(re.sub('[^0-9]', '',soup.select('.like-button-renderer-dislike-button span.yt-uix-button-content')[0].get_text()))
+
+    except:
+        # some or all of the counters could not be scraped
+        pass
+
+    return video_data
+```
+##.center[pycon-scraper.py #3]
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+##pycon-scraper.py #4
+
+```
+def parse_args():
+    parser = argparse.ArgumentParser(description='Show PyCon 2014 video statistics.')
+    parser.add_argument('--sort', metavar='FIELD', choices=['views', 'likes', 'dislikes'], default='views', help='sort by the specified field. Options are views, likes and dislikes.')
+    parser.add_argument('--max', metavar='MAX', type=int, help='show the top MAX entries only.')
+    parser.add_argument('--csv', action='store_true', default=False, help='output the data in CSV format.')
+    parser.add_argument('--workers', type=int, default=8, help='number of workers to use, 8 by default.')
+    return parser.parse_args()
+
+*# ex: python pycon-scraper.py --sort views --max 25 --workers 8
+```
+
+###.bluelight[Notes]
+```
+def show_video_stats(options):
+    pool = Pool(8)
+    video_page_urls = get_video_page_urls()
+*   results = pool.map(get_video_data, video_page_urls)
+
+# -----
+
+*func(video): return video[options.sort]
+```
+
+]]
+.column_t2[.vmiddle[
+
+```
+def show_video_stats(options):
+    pool = Pool(options.workers)
+    video_page_urls = get_video_page_urls()
+*   results = sorted(pool.map(get_video_data, video_page_urls), key=lambda video: video[options.sort], reverse=True)
+    print len(results)
+    
+    max = options.max
+    if max is None or max > len(results):
+        max = len(results)
+    if options.csv:
+        print(u'"title","speakers", "views","likes","dislikes"')
+    else:
+        print(u'Views  +1  -1 Title (Speakers)')
+        
+    for i in range(max):
+        if options.csv:
+            print(u'"{0}","{1}",{2},{3},{4}'.format(results[i]['title'], ', '.join(results[i]['speakers']), results[i]['views'], results[i]['likes'], results[i]['dislikes']))
+        else:
+            print(u'{0:5d} {1:3d} {2:3d} {3} ({4})'.format(results[i]['views'], results[i]['likes'], results[i]['dislikes'], results[i]['title'], ', '.join(results[i]['speakers'])))
+
+if __name__ == '__main__':
+    show_video_stats(parse_args())
+```
+
+]]
+
+---
+class: column_t1 middle 
+
+### $> python pycon-scraper.py --sort views 
+
+```
+Views  +1  -1 Title (Speakers)
+ 8608  80  10 Analyzing Rap Lyrics with Python (Julie Lavoie)
+ 7302  28   1 Building the App (Mike Bayer)
+ 4603  25   3 2D/3D graphics with Python on mobile platforms (Niko Skrypnik)
+ 4056  30   0 Designing Django's Migrations (Andrew Godwin)
+ 3923  41   0 Cheap Helicopters In My Living Room (Ned Jackson Lovely)
+ 3407  36   2 A Scenic Drive through the Django Request-Response Cycle (Dan Langer)
+ 3343  33   0 Advanced techniques for Web functional testing (Julien Phalip)
+ 1598  28   0 Data intensive biology in the cloud: instrumenting ALL the things(C. Titus Brown)
+  941   8   0 Deliver Your Software In An Envelope (Augie Fackler, Nathaniel Manista)
+  751   1   0 Closing address - PyCon 2014 (2014/04/13) ()
+```
+
+---
+
+# References
+
+1. [Beautiful Soup Documentation](http://www.crummy.com/software/BeautifulSoup/bs4/doc/)
+1. [Easy Web Scraping with Python](http://blog.miguelgrinberg.com/post/easy-web-scraping-with-python)
+1. [Generate statistics about PyCon 2014 videos](https://gist.github.com/miguelgrinberg/5f52ceb565264b1e969a)
+
+
+---
+class: split-30 nopadding
+background-image: url(https://cloud.githubusercontent.com/assets/4231611/11557578/f6d470f4-99df-11e5-9cf5-3445d86138c5.jpg)
+
+.column_t2.center[.vmiddle[
+.fgtransparent[
+# <i class="icon-python fa-4x"></i>
+]
+]]
+.column_t2[.vmiddle.nopadding[
+.shadelight[.boxtitle1[
+# END
+
+### [Eueung Mulyana](https://github.com/eueung)
+### http://eueung.github.io/python/bs4
+#### Python CodeLabs | [Attribution-ShareAlike CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/)
+#### 
+]]
+]]
+
+
+
+    </textarea>
+    <script src="https://gnab.github.io/remark/downloads/remark-0.12.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create({highlightLanguage:'python', highlightStyle: 'tomorrow', highlightLines: true});
+    </script>
+  </body>
+</html>
