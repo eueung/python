@@ -9,8 +9,10 @@
 - [sqlite](http://eueung.github.io/python/sqlite) | [PDF](https://speakerdeck.com/eueung/python-sqlite)
 - [Flask-RESTful](http://eueung.github.io/python/flask-restful) | [PDF](https://speakerdeck.com/eueung/flask-restful)
 - [Python GUI - PySide](http://eueung.github.io/python/pyside) | [PDF](https://speakerdeck.com/eueung/intro-to-pyside)
-- [Python - Beautiful Soup - bs4](http://eueung.github.io/python/bs4) | [PDF](https://speakerdeck.com/eueung/)
+- [Python - Beautiful Soup - bs4](http://eueung.github.io/python/bs4) | [PDF](https://speakerdeck.com/eueung/intro-to-bs4)
+- [Python - Jinja2](http://eueung.github.io/python/jinja2) | [PDF](https://speakerdeck.com/eueung/introduction-to-jinja2)
 
 ## Notebooks
 - [bs4 basics](https://github.com/eueung/python/blob/master/bs4/basics.ipynb)
 - [pycon-scraper](https://github.com/eueung/python/blob/master/bs4/pycon-scraper.ipynb)
+- [jinja2 basics](https://github.com/eueung/python/blob/master/jinja2/jinja2.ipynb)
