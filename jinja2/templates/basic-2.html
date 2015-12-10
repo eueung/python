@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>{{ title }}</title>
+  <meta name="description" content="{{ description }}" />
+</head>
+
+<body>
+<div id="content">
+  <p>My Favorite Things:</p>
+
+  <ul>
+  {% for item in favorites -%}
+    <li>{{ item }}</li>
+  {% endfor -%}
+  </ul>
+</div>
+</body>
+</html>
