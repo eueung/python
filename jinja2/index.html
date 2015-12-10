@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Python - Jinja2</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Open+Sans);
+
+body { font-family: 'Open Sans Condensed','Droid Serif','Open Sans', sans-serif; }
+h1, h2, h3, h4 {
+    font-family: 'Yanone Kaffeesatz';
+    font-weight: 400;
+    margin-bottom: 0;
+    margin-top: 10px;
+}
+h1 { font-size: 3.5em; }
+h2 { font-size: 3em; }
+h3 { font-size: 1.6em; }
+h4 { font-size: 1em; }
+.inverse {
+    background: #272822;
+    color: #777872;
+    text-shadow: 0 0 20px #333;
+}
+.inverse h1, .inverse h2 {
+    color: #f3f3f3;
+    line-height: 0.8em;
+}
+
+code { font-family: 'Ubuntu Mono', sans-serif !important; }
+pre code { background-color: #fff; border-top: 5px solid #ddd; border-bottom: 5px solid #ddd; margin-top: 10px;}
+h1 code { font-weight: 300; font-size: 1em !important; background-color: #eee; padding: 0px 5px; border-radius: 5px; }
+
+a {
+    color: #F92672;
+    text-decoration: none;
+}
+.task {
+    float: right;
+    font-size: 0.9em;
+    padding-top: 0.6em;
+}
+.task a {
+    color: #080;
+    text-decoration: none;
+}
+.right {
+    float: right;
+    margin-left: 1em;
+}
+.pushdown {
+    margin-top: 12em;
+}
+
+.done-true {
+  text-decoration: line-through;
+  color: grey;
+}
+
+ul.unstyled,ol.unstyled{margin-left:0;list-style:none;}
+
+.remark-visible .remark-slide-scaler {
+  overflow-y: auto;
+}
+
+.nopadding { padding:0 !important;}
+
+.red    { color: #FF4943; }
+.gray   { color: #787878; }
+.green  { color: #87A558; }
+.blue   { color: #41C8F0; }
+.yellow { color: #DBEC62; }
+.white  { color: #FFFFFF; }
+.or1 {color: #FFD740;}
+.bluelight {color: #B3E5FC;}
+.dark1 {color: #B6B6B6;}
+
+.bold { font-weight: bold; }
+
+pre {
+  background-color: transparent ; 
+  border: 0 ; 
+  border-radius: 0 ;
+  padding: 10px 0; 
+}
+.remark-code {
+  font-size: 14px;
+  line-height: 1.25;
+}
+
+.remark-code-line-highlighted {
+  font-weight: bold;
+  background-color: transparent;
+  text-shadow: 
+      0px 10px 30px rgba(255, 98, 20, .5),
+      10px 0px 30px rgba(255, 98, 20, .5),
+      -10px 0px 30px rgba(255, 98, 20, .5),
+      0px -10px 30px rgba(255, 98, 20, .5);
+}
+.reverse .remark-code-line-highlighted {
+    font-weight: normal !important;
+    color: transparent;
+    text-shadow: 0 0 5px #000;
+    font-size: 1em;
+}
+.reverse .remark-code-line { font-weight: bold; }
+
+.shade {
+    padding: 0;
+}
+
+.shade  {
+    background-color:rgba(0,0,0,0.7);
+    color: white;
+    width: 100%;
+    padding: 1em 0;
+}
+
+.shadelight  {
+    background-color:rgba(0,0,0,0.5);
+    color: white;
+    width: 100%;
+    padding: 0;
+}
+
+.fgtransparent h1 {
+  color:rgba(255,255,255,0.8) !important;
+  text-shadow: none;
+}
+
+.nosplit>div:first-of-type {width: 100%; height:100%; float:left; }
+.split-30>div:first-of-type {width: 30%; height:100%; float:left; }
+.split-30>div:nth-of-type(2) {width: 70%; height:100%; float:right;}
+.split-50>div:first-of-type {width: 50%; height:100%; float:left; }
+.split-50>div:nth-of-type(2) {width: 50%; height:100%; float:right;}
+.column_t1 {
+  background-color: #2aa9df;
+  color: white;
+}
+.column_t1 a {color: #B3E5FC;}
+.column_t1 pre code {
+  -webkit-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);  
+}
+.column_t2 {
+}
+
+.uline {text-decoration: underline;}
+
+.vmiddle {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  padding:1em;
+}
+.pushfront {
+    z-index: 2;   
+}
+.remark-slide-content .vmiddle h1 {margin-top: 0;}
+
+.boxtitle1 {
+  padding:1em;
+  text-align: left;
+  border-left: white solid 0.5em;
+  border-right: white solid 0em;
+}
+
+.figplain img {
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-top: #eee solid 20px;
+  border-bottom: #eee solid 20px;
+}
+.noborder img {border:none !important;}
+
+.figstyle1 img {
+  -webkit-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);  
+  width: 100%;
+}
+.figstyle1h img {
+  -webkit-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 55px 0px rgba(0,0,0,0.75);  
+  max-width: 100%;
+  max-height: 600px;
+}
+.figstyle1h {}
+
+.tab1 table {
+  background: rgba(255, 255, 255, 0.12);
+  border: 4px solid #eeeeee;
+  margin: 0px auto;
+  border-collapse:collapse;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); }
+
+.tab1 table td, .tab1 table th {
+  border: 1px solid white;
+  padding: 0.25em 1em;
+  }
+
+.tab1 table th {
+  opacity: 1;
+  background-color:#ff6600;
+  vertical-align:middle;
+} 
+.fullwidth, .fullwidth table {width: 100% !important;}
+.fullheight {max-height: 100% !important;}
+
+.tab2 table {
+  background: rgba(255, 255, 255, 0.12);
+  border: 4px solid #eeeeee;
+  margin: 0px auto;
+  border-collapse:collapse;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); }
+
+.tab2 table td, .tab2 table th {
+  border: 1px solid #eee;
+  padding: 0.25em 1em;
+  }
+
+.tab2 table th {
+  opacity: 1;
+  background-color:#ff6600;
+  vertical-align:middle;
+}  
+.fonth2 {font-size: 3em;}
+.fonth3 {font-size: 2.5em;}
+
+    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://eueung.github.io/EL5244/mfizz22/font-mfizz.css">
+  </head>
+  <body>
+    <textarea id="source">
+
+
+class: split-30 nopadding
+background-image: url(https://cloud.githubusercontent.com/assets/4231611/11557577/f6c9918e-99df-11e5-9c63-0bb70768fadf.jpg)
+
+.column_t2.center[.vmiddle[
+.fgtransparent[
+# <i class="icon-python fa-4x"></i>
+]
+]]
+.column_t2[.vmiddle.nopadding[
+.shadelight[.boxtitle1[
+# Python - Jinja2
+
+### [Eueung Mulyana](https://github.com/eueung)
+### http://eueung.github.io/python/jinja2
+#### Python CodeLabs | [Attribution-ShareAlike CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/)
+#### 
+]]
+]]
+
+---
+class: column_t1 middle
+
+.fonth3[
+.tab1.fullwidth[
+| Agenda   |
+|:-------------:|
+| Jinja Basics |
+| Rendering to Files |
+| Jinja + Flask |
+]]
+
+
+---
+class: split-30 nopadding
+background-image: url(https://cloud.githubusercontent.com/assets/4231611/11557577/f6c9918e-99df-11e5-9c63-0bb70768fadf.jpg)
+
+.column_t2.center[.vmiddle[
+.fgtransparent[
+# <i class="icon-python fa-4x"></i>
+]
+]]
+.column_t2[.vmiddle.nopadding[
+.shadelight[.boxtitle1[
+# Jinja Basics
+#### 
+]]
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+# Example #1/1-2
+
+```
+from jinja2 import Template
+
+template = Template('Hello {{ name }}!')
+*print template.render(name='John Doe')
+
+t = Template("My favorite numbers: {% for n in range(1,10) %}{{n}} " "{% endfor %}")
+*print t.render()
+```
+
+```
+Hello John Doe!
+My favorite numbers: 1 2 3 4 5 6 7 8 9 
+```
+
+]]
+.column_t1[.vmiddle[
+
+```
+from jinja2 import Template
+
+template = Template('''
+<title>{% block title %}{% endblock %}</title>
+<ul>
+*{% for user in users -%}
+  <li><a href="{{ user.url }}">{{ user.username }}</a></li>
+*{% endfor -%}
+</ul>''')
+
+print template.render(title='title string', users=[{'username':'abc', 'url':'abc@gmail.com'},{'username':'123', 'url':'123@gmail.com'}])
+```
+
+```html
+<title></title>
+<ul>
+<li><a href="abc@gmail.com">abc</a></li>
+<li><a href="123@gmail.com">123</a></li>
+</ul>
+```
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+## Example #1/3
+
+]]
+.column_t2[.vmiddle[
+
+```
+*from jinja2 import Environment
+
+HTML = """
+<html><head> <title>{{ title }}</title> </head>
+<body>Hello.</body>
+</html>
+"""
+
+def print_html():
+*   print Environment().from_string(HTML).render(title='Hello Title')
+
+print_html()
+```
+
+```html
+<html><head> <title>Hello Title</title> </head>
+<body>Hello.</body>
+</html>
+```
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+# Example #2/1
+
+```
+from jinja2 import Environment, FileSystemLoader
+
+THIS_DIR = 'templates'
+
+def print_html():
+*   j2_env = Environment(loader=FileSystemLoader(THIS_DIR), trim_blocks=True)
+    
+*   print j2_env.get_template('basic-1.html').render(
+        title='Hello Title'
+    )
+
+print_html()
+```
+
+```html
+<html>
+<head>
+*  <title>{{ title }}</title>
+</head>
+<body>
+   Hello.
+</body>
+</html>
+```
+.center[basic-1.html]
+
+
+]]
+.column_t1[.vmiddle[
+
+```html
+<html>
+<head>
+*  <title>Hello Title</title>
+</head>
+<body>
+   Hello.
+</body>
+</html>
+```
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+## Example #2/2
+
+```
+import jinja2
+
+templateLoader = jinja2.FileSystemLoader( searchpath="templates" )
+templateEnv = jinja2.Environment( loader=templateLoader )
+
+TEMPLATE_FILE = "basic-2.html"
+*template = templateEnv.get_template( TEMPLATE_FILE )
+
+FAVORITES = [ "chocolates", "lunar eclipses", "rabbits" ]
+
+*templateVars = { "title" : "Test Example",
+                 "description" : "A simple inquiry of function.",
+                 "favorites" : FAVORITES }
+
+*print template.render( templateVars )
+
+```
+
+]]
+.column_t1[.vmiddle[
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+* <title>{{ title }}</title>
+* <meta name="description" content="{{ description }}" />
+</head>
+
+<body>
+<div id="content">
+  <p>My Favorite Things:</p>
+
+  <ul>
+* {% for item in favorites -%}
+*   <li>{{ item }}</li>
+* {% endfor -%}
+  </ul>
+</div>
+</body>
+</html>
+```
+.center[basic-2.html]
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+## Example #2/2
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+* <title>Test Example</title>
+* <meta name="description" content="A simple inquiry of function." />
+</head>
+
+<body>
+<div id="content">
+  <p>My Favorite Things:</p>
+
+  <ul>
+* <li>chocolates</li>
+* <li>lunar eclipses</li>
+* <li>rabbits</li>
+  </ul>
+</div>
+</body>
+</html>
+```
+]]
+.column_t2[.vmiddle[
+
+]]
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+## Example #2/3
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Test Jinja2</title>
+</head>
+<body>
+<center>
+    <h1>Hello Jinja2</h1>
+*   <p>Builtin Filters - {{ urls|length }} links</p>
+</center>
+<ol align="left">
+*{% set counter = 0 -%}
+*{% for url in urls -%}
+*  {% set counter = counter + 1 -%}
+*  <li><a href="{{ url }}">{{ url }}</a> | counter inside: {{ counter }} </li>
+*{% endfor -%}
+</ol>
+*   <p>counter outside: {{ counter }}</p>
+</body>
+</html>
+```
+.center[basic-3.html]
+
+]]
+.column_t2[.vmiddle[
+
+```
+import os
+from jinja2 import Environment, FileSystemLoader
+ 
+PATH = '.'
+TEMPLATE_ENVIRONMENT = Environment(
+    autoescape=False,
+    loader=FileSystemLoader(os.path.join(PATH, 'templates')),
+    trim_blocks=False)
+ 
+*def render_template(template_filename, context):
+    return TEMPLATE_ENVIRONMENT.get_template(template_filename).render(context)
+ 
+*def create_index_html():
+*   fname = "results/output-basic-3.html"
+    urls = ['http://example.com/1', 'http://example.com/2', 'http://example.com/3']
+    context = {
+        'urls': urls
+    }
+    with open(fname, 'w') as f:
+*       html = render_template('basic-3.html', context)
+        f.write(html)
+
+create_index_html()
+```
+
+]]
+
+---
+class: column_t1 middle center 
+
+.figstyle1[
+![](images/fig01.jpg)
+]
+### output-basic-3.html 
+
+
+---
+class: split-30 nopadding
+background-image: url(https://cloud.githubusercontent.com/assets/4231611/11557577/f6c9918e-99df-11e5-9c63-0bb70768fadf.jpg)
+
+.column_t2.center[.vmiddle[
+.fgtransparent[
+# <i class="icon-python fa-4x"></i>
+]
+]]
+.column_t2[.vmiddle.nopadding[
+.shadelight[.boxtitle1[
+# Rendering to Files
+#### Based on the Codes by @[mjhea0](https://github.com/mjhea0) (Michael Herman/Real Python)
+#### 
+]]
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+
+```
+import os
+from jinja2 import Environment, FileSystemLoader
+ 
+PATH = '.'
+TEMPLATE_ENVIRONMENT = Environment(
+    autoescape=False,
+    loader=FileSystemLoader(os.path.join(PATH, 'templates')),
+    trim_blocks=False)
+ 
+*def render_template(template_filename, context):
+    return TEMPLATE_ENVIRONMENT.get_template(template_filename).render(context)
+
+*def create_index_html():
+*   fname = "results/output-t-0.html"
+    
+    my_string="Hello!" 
+    my_list=[0,1,2,3,4,5]
+
+*   context = {
+        'title' : 'title t-0',
+        'my_string': my_string,
+        'my_list': my_list
+    }
+*   with open(fname, 'w') as f:
+*       html = render_template('t-0.html', context)
+        f.write(html)
+
+create_index_html()
+```
+
+]]
+.column_t1[.vmiddle[
+# Example t-0
+
+```html
+<div class="container">
+
+* <p>My string: {{my_string}}</p>
+* <p>Value from the list: {{my_list[3]}}</p>
+  <p>Loop through the list:</p>
+  <ul>
+*   {% for n in my_list %}
+*   <li>{{n}}</li>
+*   {% endfor %}
+  </ul>
+
+</div>
+```
+.center[t-0.html (partial)]
+
+]]
+
+---
+class: column_t1 middle center 
+
+.figstyle1[
+![](images/fig02.jpg)
+]
+### output-t-0.html 
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+# Example t-1
+
+```html
+*{% extends "t-layout-1.html" %}
+*{% block content %}
+  <h3> This is the start of my child template</h3>
+  <br>
+  <p>My string: {{my_string}}</p>
+  <p>Value from the list: {{my_list[3]}}</p>
+  <p>Loop through the list:</p>
+  <ul>
+    {% for n in my_list %}
+    <li>{{n}}</li>
+    {% endfor %}
+  </ul>
+  <h3> This is the end of my child template</h3>
+*{% endblock %}
+```
+.center[t-1.html]
+
+]]
+.column_t2[.vmiddle[
+
+```
+<div class="container">
+
+  <h2>This is part of my base template</h2>
+  <br>
+* {% block content %}{% endblock %}
+  <br>
+  <h2>This is part of my base template</h2>
+
+</div>
+```
+.center[t-layout-1.html (partial)]
+
+]]
+
+
+---
+class: column_t1 middle center 
+
+.figstyle1[
+![](images/fig03.jpg)
+]
+### output-t-1.html 
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+# Example t-2
+
+```html
+{% extends "t-layout-2.html" %}
+
+*{% block page %}Home{% endblock %}
+*{% block heading %}
+*  {{ super() }}
+*{% endblock %}
+
+{% block content %}
+  <h3> This is the start of my child template</h3>
+  <br>
+  <p>My string: {{my_string}}</p>
+  <p>Value from the list: {{my_list[3]}}</p>
+  <p>Loop through the list:</p>
+  <ul>
+    {% for n in my_list %}
+    <li>{{n}}</li>
+    {% endfor %}
+  </ul>
+  <h3> This is the end of my child template</h3>
+{% endblock %}
+
+```
+.center[t-2.html]
+
+]]
+.column_t1[.vmiddle[
+
+```html
+<div class="container">
+* {% block heading %}
+*   <h1>{% block page %}{% endblock %} - Flask Super Example</h1>
+* {% endblock %}
+
+  <h2>This is part of my base template</h2>
+  <br>
+  {% block content %}{% endblock %}
+  <br>
+  <h2>This is part of my base template</h2>
+
+</div>
+```
+.center[t-layout-2.html (partial)]
+
+]]
+
+
+---
+class: column_t1 middle center 
+
+.figstyle1[
+![](images/fig04.jpg)
+]
+### output-t-2.html 
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+# Example t-3
+
+```html
+{% extends "t-layout-3.html" %}
+
+*{% block title %}{{title}}{% endblock %}
+*{% block head %}
+* {{ super() }}
+*{% endblock %}
+
+{% block page %}{{title}}{% endblock %}
+{% block heading %} {{ super() }} {% endblock %}
+
+{% block content %}
+  <h3> This is the start of my child template</h3><br><br>
+  <p>My string: {{my_string}}</p>
+  <p>Value from the list: {{my_list[3]}}</p>
+  <p>Loop through the list:</p>
+  <ul> {% for n in my_list %}
+    <li>{{n}}</li>
+    {% endfor %} </ul>
+  <br><p>Same list with a filter: {{ my_list|join(', ') }}</p>
+  <h3> This is the end of my child template</h3>
+
+* {% block trailer %} {{super()}} {% endblock %}
+
+{% endblock %}
+```
+.center[t-3.html]
+
+]]
+.column_t1[.vmiddle[
+
+```html
+<div class="container">
+  {% block heading %}
+    <h1>{% block page %}{% endblock %} - Flask Super Example</h1>
+  {% endblock %}
+  <h2>This is part of my base template</h2>
+  <br>
+  {% block content %}{% endblock %}
+  <br>
+  <h2>This is part of my base template</h2>
+  <br>
+  <div class="trailer">
+*   {% block trailer %}
+*     Watch! This will be added to my base and child templates using the super powerful super block!
+*     <br><br><br>
+*   {% endblock %}
+  </div>  
+
+```
+.center[t-layout-3.html (partial)]
+
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+# Example t-3
+
+```html
+{% macro nav_link(endpoint, name) %}
+  <li><a href="#{{ endpoint }}">{{name}}</a></li>
+{% endmacro %}
+```
+.center[t-macro-3.html]
+
+]]
+.column_t1[.vmiddle[
+
+```html
+*{% from "t-macro-3.html" import nav_link with context %}
+<!DOCTYPE html>
+...
+*{% block head %}
+* <title>{% block title %}{% endblock %} - Flask Super Example</title>
+*{% endblock %}
+...
+
+<div id="navbar" class="collapse navbar-collapse">
+  <ul class="nav navbar-nav">
+*   {{ nav_link('home', 'Home') }}
+*   {{ nav_link('about', 'About') }}
+*   {{ nav_link('contact', 'Contact Us') }}
+
+    <li class="dropdown">
+    ...</li>
+  </ul>
+</div>  
+```
+.center[t-layout-3.html (partial)]
+
+
+]]
+
+---
+class: column_t1 middle center 
+
+.figstyle1[
+![](images/fig05.jpg)
+]
+### output-t-3.html 
+
+---
+class: split-30 nopadding
+background-image: url(https://cloud.githubusercontent.com/assets/4231611/11557577/f6c9918e-99df-11e5-9c63-0bb70768fadf.jpg)
+
+.column_t2.center[.vmiddle[
+.fgtransparent[
+# <i class="icon-python fa-4x"></i>
+]
+]]
+.column_t2[.vmiddle.nopadding[
+.shadelight[.boxtitle1[
+# Jinja + Flask
+#### 
+]]
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t2[.vmiddle[
+
+```
+from flask import Flask, render_template
+import datetime
+
+app = Flask(__name__)
+#---------------------------------------------
+*@app.template_filter()
+*def datetimefilter(value, format='%Y/%m/%d %H:%M'):
+    return value.strftime(format)
+
+*app.jinja_env.filters['datetimefilter'] = datetimefilter
+#---------------------------------------------
+*@app.route("/")
+def template_test():
+    return render_template('f-template.html', my_string="Wheeeee!", my_list=[0,1,2,3,4,5], title="Index", current_time=datetime.datetime.now())
+
+*@app.route("/home")
+def home():
+    return render_template('f-template.html', my_string="Foo", my_list=[6,7,8,9,10,11], title="Home", current_time=datetime.datetime.now())
+
+*@app.route("/about")
+def about():
+    return render_template('f-template.html', my_string="Bar", my_list=[12,13,14,15,16,17], title="About", current_time=datetime.datetime.now())
+
+*@app.route("/contact")
+def contact():
+    return render_template('f-template.html', my_string="FooBar", my_list=[18,19,20,21,22,23], title="Contact Us", current_time=datetime.datetime.now())
+#---------------------------------------------
+if __name__ == '__main__':
+    app.run(host='0.0.0.0',debug=True)
+```
+
+]]
+.column_t1[.vmiddle[
+# Example #4
+
+```html
+{% macro nav_link(endpoint, name) %}
+*{% if request.endpoint.endswith(endpoint) %}
+  <li class="active"><a href="{{ url_for(endpoint) }}">{{name}}</a></li>
+*{% else %}
+  <li><a href="{{ url_for(endpoint) }}">{{name}}</a></li>
+*{% endif %}
+{% endmacro %}
+```
+.center[f-macro.html]
+
+]]
+
+---
+class: split-50 nopadding 
+
+.column_t1[.vmiddle[
+# Example #4
+
+
+]]
+.column_t2[.vmiddle[
+
+```html
+{% extends "f-layout.html" %}
+
+*{% block title %}{{title}}{% endblock %}
+*{% block head %} {{ super() }} {% endblock %}
+
+*{% block page %}{{title}}{% endblock %}
+*{% block heading %} {{ super() }} {% endblock %}
+
+{% block content %}
+  <h3> This is the start of my child template</h3>
+  <br>
+* <h4>Current date/time: {{ current_time | datetimefilter }}</h4>
+  <br>
+  <p>My string: {{my_string}}</p>
+  <p>Value from the list: {{my_list[3]}}</p>
+  <p>Loop through the list:</p>
+  <ul>
+*   {% for n in my_list %}
+    <li>{{n}}</li>
+*   {% endfor %}
+  </ul>
+  <br>
+* <p>Same list with a filter: {{ my_list|join(', ') }}</p>
+  <h3> This is the end of my child template</h3>
+
+* {% block trailer %} {{super()}} {% endblock %}
+
+{% endblock %}
+```
+.center[f-template.html]
+
+]]
+
+---
+class: column_t1 middle center 
+
+.figstyle1[
+![](images/fig06.jpg)
+]
+### http://localhost:5000 
+
+---
+class: column_t1 middle center 
+
+.figstyle1[
+![](images/fig07.jpg)
+]
+### http://localhost:5000/about 
+
+
+---
+# References
+
+1. [Welcome to Jinja2 — Jinja2 Documentation](http://jinja.pocoo.org/docs/dev/)
+1. [Introduction](http://jinja.pocoo.org/docs/dev/intro/)
+1. [Tips and Tricks](http://jinja.pocoo.org/docs/dev/tricks/)
+1. [Template Designer](http://jinja.pocoo.org/docs/dev/templates/)
+1. [Primer on Jinja Templating - Real Python](https://realpython.com/blog/python/primer-on-jinja-templating/)
+
+# Other Readings
+1. [Jinja2 Example | Python Adventures](https://pythonadventures.wordpress.com/2014/02/25/jinja2-example-for-generating-a-local-file-using-a-template/)
+1. [Jinja2 Examples](https://gist.github.com/wrunk/1317933)
+1. [Quickstart Guide to Using Jinja2](http://kagerato.net/articles/software/libraries/jinja-quickstart.html)
+
+---
+class: split-30 nopadding
+background-image: url(https://cloud.githubusercontent.com/assets/4231611/11557577/f6c9918e-99df-11e5-9c63-0bb70768fadf.jpg)
+
+.column_t2.center[.vmiddle[
+.fgtransparent[
+# <i class="icon-python fa-4x"></i>
+]
+]]
+.column_t2[.vmiddle.nopadding[
+.shadelight[.boxtitle1[
+# END
+
+### [Eueung Mulyana](https://github.com/eueung)
+### http://eueung.github.io/python/jinja2
+#### Python CodeLabs | [Attribution-ShareAlike CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/)
+#### 
+]]
+]]
+
+
+
+    </textarea>
+    <script src="https://gnab.github.io/remark/downloads/remark-0.12.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create({highlightLanguage:'python', highlightStyle: 'tomorrow', highlightLines: true});
+    </script>
+  </body>
+</html>
