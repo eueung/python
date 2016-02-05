@@ -12,6 +12,7 @@
 - [Python - Beautiful Soup - bs4](http://eueung.github.io/python/bs4) | [PDF](https://speakerdeck.com/eueung/intro-to-bs4)
 - [Python - Jinja2](http://eueung.github.io/python/jinja2) | [PDF](https://speakerdeck.com/eueung/introduction-to-jinja2)
 - [Google App Engine - Python](http://eueung.github.io/EL6240/gae) | [PDF](https://speakerdeck.com/eueung/intro-to-google-app-engine-python)
+- [HTTP Basics - Python](http://eueung.github.io/EL6240/http) | [PDF](https://speakerdeck.com/eueung/http-basics)
 
 ## Notebooks
 - [bs4 basics](https://github.com/eueung/python/blob/master/bs4/basics.ipynb)
